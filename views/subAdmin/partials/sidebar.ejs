@@ -1,0 +1,84 @@
+<div class="sidebar sidebar-main">
+    <div class="sidebar-content">
+
+        <!-- User menu -->
+        <div class="sidebar-user">
+            <div class="category-content">
+                <div class="media">
+
+                    <!-- <div class="media-body">
+                        <center class="logo">
+
+                            <a href="/dashboard">
+                           <img src="/assets/images/logo.png" height="100%" width="70px"
+                                    alt="">
+                                    <strong>ATARA</strong>
+                                    </a>
+                        </center>
+
+                    </div> -->
+
+                    <div class="media-right media-middle">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /user menu -->
+
+
+        <!-- Main navigation -->
+        <div class="sidebar-category sidebar-category-visible">
+            <div class="category-content no-padding">
+                <ul class="navigation navigation-main navigation-accordion">
+
+
+                    <li class="<%=(title == 'subadminDashboard' )? 'active' : '' %>">
+                        <a href="/subadminDashboard"><i class="icon-home4"></i> <span>Dashboard</span></a>
+                    </li>
+
+                    <h1><%= global.permission %></h1>
+
+                    <% if(global.permission!='' ){ %>
+                        <h1>asdasasas</h1>
+                        <% if(global.permission.module.includes('user')){ %>
+                            
+                            <li
+                                class="<%=(title == 'influencers' || title=='influencer_statistics') || title=='professionals' || title=='sub_admins'? 'active' : '' %>    <%= global.permission %>">
+                                <a href="#"><i class="fas fa-users" style="font-size: 15px;"></i>
+                                    <span>Users</span></a>
+                                <ul>
+                                    <% if(global.permission.sub_module.includes('influencer')){ %>
+                                        <li><a class="<%= title=='influencers'?" active":"" %>"
+                                                href="/userslisting">Influencers</a>
+                                        </li>
+                                        <% } %>
+                                            <% if(global.permission.sub_module.includes('influencer_statistic')){ %>
+                                                <li><a class="<%= title=='influencer_statistics'? 'active':'' %>"
+                                                        href="/admin/influencer/statistics">Influencer
+                                                        Statistics</a></li>
+                                                <% } %>
+                                                    <% if(global.permission.sub_module.includes('professional')){ %>
+                                                        <li><a class="<%= title=='professionals'? 'active':'' %>"
+                                                                href="/admin/professionals">Professsionals</a></li>
+                                                        <% } %>
+                    
+                                                            <% if(global.permission.sub_module.includes('sub_admin')){ %>
+                    
+                                                                <li><a class="<%= title=='sub_admins'? 'active':'' %>"
+                                                                        href="/admin/sub_admins">Sub
+                                                                        Admins</a></li>
+                                                                <% } %>
+                    
+                                </ul>
+                            </li>
+                            <% } }%>
+
+
+
+            </div>
+        </div>
+        <!-- /main navigation -->
+
+    </div>
+</div>

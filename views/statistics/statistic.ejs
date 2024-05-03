@@ -1,0 +1,360 @@
+<% if(session.type==1){ %>
+  <%-include('../partials/header')%>
+    <%}else{%>
+      <%- include ("../subAdmin/partials/header") %>
+        <%}%>
+          <div class="page-container">
+            <div class="page-content">
+              <% if(session.type==1){ %>
+                <%-include('../partials/sidebar')%>
+                  <%}else{%>
+                    <%- include ("../subAdmin/partials/sidebar") %>
+                      <%}%>
+                        <div class="content-wrapper">
+                          <!-- Page header -->
+                          <div class="page-header page-header-default">
+                            <div class="page-header-content">
+                              <div class="page-title">
+                                <h4>
+                                  <a href="javascript:history.go(-1);"><i
+                                      class="icon-arrow-left52 position-left"></i></a><span
+                                    class="text-semibold">Home</span> - Statistics
+                                </h4>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- /page header -->
+                          <!-- Content area -->
+                          <div class="content">
+                            <div class="panel panel-flat">
+                              <!-- <div class="panel-heading">
+                                <h1 class="panel-title">Form</h1>
+                            </div> -->
+                              <div class="panel-body">
+                                <form id="category_form" class="form-horizontal" action="/admin/statistics/addEditPost"
+                                  enctype="multipart/form-data" method="post">
+                                  <input type="hidden" name="id" value="<%= Object.keys(statisticsArr).length>0 && statisticsArr.id?statisticsArr.id:"" %>">
+                                  <fieldset class="content-group">
+                                    <legend class="text-bold">Add Statistics</legend>
+                                    <div class="form-group">
+                                      <label class="control-label col-lg-2" for="pro">Choose Professionals :</label>
+                                      <div class="col-lg-10">
+                                        <select class="form-control" onchange="getBusinesses(this)"
+                                          data-placeholder="Choose professionals..." name="pro_id" id="pro_id">
+                                          <option class="dropdown-item" disabled="disabled" selected="selected">Select
+                                          </option>
+                                          <% users.forEach((value)=>{%>
+                                            <option class="dropdown-item" value="<%= value.id%>"
+                                              <%=statisticsArr.pro_id==value.id?"selected":"" %> >
+                                              <%=value.full_name%>
+                                            </option>
+                                            <%})%>
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <div
+                                      class="form-group business_drpdwn_div <%= Object.keys(statisticsArr).length>0 && statisticsArr.business_id ? "" :"hide" %>">
+                                      <label class="control-label col-lg-2" for="pro ">Choose Business :</label>
+                                      <div class="col-lg-10 business_drpdwn">
+                                        <% if(Object.keys(statisticsArr).length>0){ %>
+                                        <select class="form-control" name="business_id" onchange="getStatistics('<%= statisticsArr.pro_id %>',this)" data-placeholder="Choose business...">
+                                          <option class="dropdown-item" disabled="disabled" selected="selected">Please select business
+                                          </option>
+                                          <% for(let i in businessesArr){ %>
+                                            <option value="<%= businessesArr[i].id %>" <%= statisticsArr.business_id==businessesArr[i].id?"selected":"dsfds" %> ><%= businessesArr[i].name %></option>
+                                          <% } %>
+                                        </select>
+                                        <% } %>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="control-label col-lg-2">No. of Influencers received<span
+                                          class="text-danger">*</span></label>
+                                      <div class="col-lg-10">
+                                        <input type="hidden" id="influencer_id" name="influencer" value="<%= Object.keys(statisticsArr).length>0 && statisticsArr.influencer?statisticsArr.influencer:"0" %>">
+                                        <input type="number" name="influencer" id="influencer" class="form-control"
+                                          placeholder="Enter No. of Influencers received" value="<%= Object.keys(statisticsArr).length>0 && statisticsArr.influencer?statisticsArr.influencer:"0" %>" disabled required>
+                                        <div class="no_influencers_div error"></div>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="control-label col-lg-2">No. of Partnerships done<span
+                                          class="text-danger">*</span></label>
+                                      <div class="col-lg-10">
+                                        <input type="hidden" id="partnership_id" name="partnership" value="<%= Object.keys(statisticsArr).length>0 && statisticsArr.partnership?statisticsArr.partnership:"0" %>">
+                                        <input type="number" id="partnership" class="form-control"
+                                          placeholder="Enter No. of partnerships done" value="<%= Object.keys(statisticsArr).length>0 && statisticsArr.partnership?statisticsArr.partnership:"0" %>" disabled required>
+                                        <div class="no_partnerships_div error"></div>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="control-label col-lg-2">Stories Created<span
+                                          class="text-danger">*</span></label>
+                                      <div class="col-lg-10">
+                                        <input type="number" name="no_stories" id="no_stories" class="form-control"
+                                          placeholder="Enter Stories Created" value="<%= Object.keys(statisticsArr).length>0 && statisticsArr.no_stories?statisticsArr.no_stories:"" %>" required>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="control-label col-lg-2">No. of Views<span
+                                          class="text-danger">*</span></label>
+                                      <div class="col-lg-10">
+                                        <input type="number" name="no_views" id="no_views" class="form-control"
+                                          placeholder="Enter No. of views" value="<%= Object.keys(statisticsArr).length>0 && statisticsArr.no_views?statisticsArr.no_views:"" %>" required>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="control-label col-lg-2">Money Saved From a Traditional Add
+                                        Campaign<span class="text-danger">*</span></label>
+                                      <div class="col-lg-10">
+                                        <input type="number" name="money" id="no_guest" value="<%= Object.keys(statisticsArr).length>0 && statisticsArr.money?statisticsArr.money:"" %>" class="form-control"
+                                          placeholder="Enter Money Saved From a Traditional Add Campaign" required>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="control-label col-lg-2">Statistic of the Month<span
+                                          class="text-danger">*</span></label>
+                                      <div class="col-lg-10">
+                                        <input type="text" name="statistics_of_the_month" id="statistics_of_the_month" class="form-control"
+                                          placeholder="Statistic of the Month" value="<%= Object.keys(statisticsArr).length>0 && statisticsArr.statistics_of_the_month?statisticsArr.statistics_of_the_month:"" %>" required>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="control-label col-lg-2">Campaign performed : Number of Influencer come within 1 month<span
+                                          class="text-danger">*</span></label>
+                                      <div class="col-lg-10">
+                                        <input type="text" name="campaign_performed" id="campaign_performed" class="form-control"
+                                          placeholder="Campaign performed" value="<%= Object.keys(statisticsArr).length>0 && statisticsArr.campaign_performed?statisticsArr.campaign_performed:"" %>" required>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="control-label col-lg-2">Number of interactions<span
+                                          class="text-danger">*</span></label>
+                                      <div class="col-lg-10">
+                                        <input type="text" name="number_of_interactions" id="number_of_interactions" class="form-control"
+                                          placeholder="Enter No. of interactions" value="<%= Object.keys(statisticsArr).length>0 && statisticsArr.number_of_interactions?statisticsArr.number_of_interactions:"" %>" required>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="control-label col-lg-2">Best Influencer<span
+                                          class="text-danger">*</span></label>
+                                      <div class="col-lg-10">
+                                        <input type="text" name="best_influencer" id="best_influencer" class="form-control"
+                                          placeholder="Enter Best Influencer" value="<%= Object.keys(statisticsArr).length>0 && statisticsArr.best_influencer?statisticsArr.best_influencer:"" %>" required>
+                                      </div>
+                                    </div>
+                                    <div class="text-right">
+                                      <% if(type===1 || (type===4 && permi.indexOf('add')>= 0)) { 
+                                          if(Object.keys(statisticsArr).length>0){
+                                        %>
+
+                                        <button type="submit" class="btn btn-primary">Update</button>
+                                        <% }else{ %>
+                                          <button type="submit" class="btn btn-primary">Add</button>
+                                          <% }} %>
+                                          <a href="/admin/statistics" style="background-color: #8080808c; color: black;" type="submit" class="btn btn-secondary">
+                                            Back
+                                          </a>
+                                    </div>
+                                  </fieldset>
+                                </form>
+                                <%-include('../partials/footer')%>
+                              </div>
+                              <!-- /content area -->
+                            </div>
+                            <!-- /main content -->
+                          </div>
+                          <!-- /page content -->
+                        </div>
+                        <!-- /page container -->
+                        </body>
+
+                        </html>
+
+                    
+                        
+
+                        <script>
+
+                            jQuery.validator.addMethod(
+                              "noSpace",
+                              function (value, element) {
+                                return value == "" || value.trim().length != 0;
+                              },
+                              "Space shouldn't be allowed"
+                            );
+                            $("#category_form").validate({
+                              ignore: [],
+                              // Specify validation rules
+                              rules: {
+                                pro_id: {
+                                  required: true,
+                                  noSpace: true,
+                                },
+                                no_stories: {
+                                  required: true,
+                                  noSpace: true,
+                                },
+                                no_views: {
+                                  required: true,
+                                  noSpace: true,
+                                },
+                                business_id: {
+                                  required: true,
+                                },
+                                money: {
+                                  required: true,
+                                  noSpace: true,
+                                },
+                                statistics_of_the_month: {
+                                  required: true,
+                                  noSpace: true,
+                                },
+                                campaign_performed: {
+                                  required: true,
+                                  noSpace: true,
+                                },
+                                number_of_interactions: {
+                                  required: true,
+                                  noSpace: true,
+                                },
+                                best_influencer: {
+                                  required: true,
+                                  noSpace: true,
+                                },
+
+                              },
+                              messages: {
+                                pro_id: {
+                                  required: " Please select professional",
+                                  accept: "Please select a vaild professional ",
+                                },
+                                no_stories: {
+                                  required: " Please enter stories created",
+                                  accept: "Please enter a vaild stories created ",
+                                },
+
+                                no_views: {
+                                  required: " Please enter no. of views",
+                                  accept: "Please enter a vaild no. of views ",
+                                },
+                                business_id: {
+                                  required: "Please select business"
+                                },
+                                money: {
+                                  required: "Please enter money saved from a traditional add campaign",
+                                  accept: "Please enter valid money saved from a traditional add campaign ",
+                                },
+                                statistics_of_the_month: {
+                                  required: "Please enter statistics of the month",
+                                  accept: "Please enter valid statistics of the month",
+                                },
+                                campaign_performed: {
+                                  required: "Please enter campaign performed",
+                                  accept: "Please enter valid campaign performed",
+                                },
+                                number_of_interactions: {
+                                  required: "Please enter number of interactions",
+                                  accept: "Please enter valid number of interactions",
+                                },
+                                best_influencer: {
+                                  required: "Please enter best influencer",
+                                  accept: "Please enter valid best influencer",
+                                },
+                              },
+                              errorPlacement: function (error, element) {
+                                if ($(element).attr("name") == "influencer") {
+                                  error.appendTo(".no_influencers_div");
+                                } else if ($(element).attr("name") == "partnership") {
+                                  error.appendTo(".no_partnerships_div");
+                                } else {
+                                  error.insertAfter(element);
+                                }
+                              },
+                            });
+
+
+
+
+
+                          $(document).ready(function () {
+
+                            $('#addSubRenovation').click(function () {
+                              let html = ``;
+                              html += `&nbsp;
+          <div class="input-group">
+
+            <input type="text" class="form-control sub_name" name="title" placeholder="Title" required> &nbsp; &nbsp; &nbsp;
+            <input type="number" class="form-control sub_name" name="no_guest" placeholder="no of guest" required> &nbsp; &nbsp; &nbsp;
+            <div class="input-group-prepend delBtn">
+              <div class="input-group-text" style="color: red;">
+                <i class="fa fa-trash" >Remove</i>
+              </div>
+            </div>
+            <div class="invalid-feedback">
+              Please fill in no of guest
+            </div>
+          </div>`;
+
+                              $(".addSubRenovationInput").append(html);
+                            })
+
+                            $(document).on('click', '.delBtn', function () {
+                              console.log('i am clicked')
+                              console.log($(this).parent('div'), '---$(this).parent(div)--');
+                              $(this).parent('div').remove();
+                            })
+
+                          });
+
+
+                          function getBusinesses(elem) {
+                            $("#influencer").val(0);
+                            $("#partnership").val(0);
+                            var professional_id = elem.value;
+                            $.ajax({
+                              url: "/admin/statistics/getBusinesses",
+                              type: "post",
+                              data: { professional_id: professional_id },
+                              success: function (result) {
+                                if (result) {
+                                  $(".business_drpdwn_div").removeClass("hide")
+                                  var html = `<select class="form-control" onchange="getStatistics('${elem.value}',this)" data-placeholder="Choose business..." name="business_id">`
+                                  if (result.length === 0) {
+                                    html += `<option class="dropdown-item" disabled="disabled" selected="selected">No business found</option>`
+                                  } else {
+                                    html += `<option class="dropdown-item" disabled="disabled" selected="selected">Please select business</option>`
+                                  }
+
+                                  for (let index = 0; index < result.length; index++) {
+
+                                    html += `<option value="${result[index].id}">${result[index].name}</option>`
+                                  }
+                                  html += `</select>`
+                                  $(".business_drpdwn").html(html)
+                                }
+                              },
+                            });
+                          }
+
+
+                          function getStatistics(professional_id, elem) {
+                            $("#influencer").val(0);
+                            $("#partnership").val(0);
+                            var business_id = elem.value;
+                            $.ajax({
+                              url: "/admin/statistics/getStatistics",
+                              type: "post",
+                              data: { professional_id: professional_id, business_id: business_id },
+                              success: function (result) {
+                                if (result) {
+                                  $("#influencer").val(result.total_influencers);
+                                  $("#partnership").val(result.total_partnerships);
+                                  $("#influencer_id").val(result.total_influencers);
+                                  $("#partnership_id").val(result.total_partnerships);
+                                }
+                              },
+                            });
+                          }
+                        </script>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

@@ -1,0 +1,411 @@
+<% if(session.type==1){ %>
+    <%-include('../partials/header')%>
+        <%}else{%>
+            <%- include ("../subAdmin/partials/header") %>
+                <%}%>
+                    <div class="page-container">
+                        <div class="page-content">
+                            <% if(session.type==1){ %>
+                                <%-include('../partials/sidebar')%>
+                                    <%}else{%>
+                                        <%- include ("../subAdmin/partials/sidebar") %>
+                                            <%}%>
+                                                <div class="content-wrapper">
+                                                    <!-- Page header -->
+                                                    <div class="page-header page-header-default">
+                                                        <div class="page-header-content">
+                                                            <div class="page-title">
+                                                                <h4>
+                                                                    <a href="javascript:history.go(-1);"><i
+                                                                            class="icon-arrow-left52 position-left"></i></a><span
+                                                                        class="text-semibold"><%= Object.keys(influencerStatiscsArr).length>0?"Edit Statistics":"Add Statistics" %></span>
+                                                                </h4>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /page header -->
+                                                    <!-- Content area -->
+                                                    <div class="content">
+                                                        <div class="panel panel-flat">
+                                                           
+                                                            <div class="panel-body">
+                                                                <form id="category_form" class="form-horizontal"
+                                                                    action="/admin/inluencers/addEditPost"
+                                                                    enctype="multipart/form-data" method="post">
+                                                                    <input type="hidden" name="id"
+                                                                        value="<%= Object.keys(influencerStatiscsArr).length>0 && influencerStatiscsArr.id?influencerStatiscsArr.id:"" %>">
+                                                                    <fieldset class="content-group">
+                                                                        <legend class="text-bold"><%= Object.keys(influencerStatiscsArr).length>0?"Edit Statistics":"Add Statistics" %>  
+                                                                        </legend>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-lg-2"
+                                                                                for="pro">Choose Influencer:</label>
+                                                                            <div class="col-lg-10">
+                                                                                <select class="form-control"
+                                                                                id="influencer_id"
+                                                                                    data-placeholder="Choose professionals..."
+                                                                                    name="influencer_id">
+                                                                                    <option class="dropdown-item"
+                                                                                        disabled="disabled"
+                                                                                        selected="selected">Select
+                                                                                    </option>
+                                                                                    <% influencersArr.forEach((value)=>{%>
+                                                                                        <option class="dropdown-item"
+                                                                                            value="<%= value.id%>" <%= influencerStatiscsArr.influencer_id==value.id?"selected":"" %>>
+                                                                                            <%=value.full_name%>
+                                                                                        </option>
+                                                                                        <%})%>
+                                                                                </select>
+                                                                                <div class="drpdwn_error_div error" id="drpdwn_error_div"></div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-lg-2">Average Views<span class="text-danger">*</span></label>
+                                                                            <div class="col-lg-10">
+                                                                                <input type="number" onkeyup="return trim(this)" id="view_avg" name="view_avg"
+                                                                                    value="<%= Object.keys(influencerStatiscsArr).length>0 && influencerStatiscsArr.view_avg?influencerStatiscsArr.view_avg:"" %>"
+                                                                                    class="form-control" placeholder="Please enter average of view">
+                                                                                    <div class="view_avg_error_div error" id="view_avg_error_div"></div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <legend class="text-bold">
+                                                                            Age Repartition
+                                                                        </legend>
+                                                                        <div class="form-group">
+                                                                            <label
+                                                                                class="control-label col-lg-2">Less than 18<span
+                                                                                    class="text-danger">*</span></label>
+                                                                            <div class="col-lg-10">
+                                                                                <input type="number" min="1" max="100" name="less_than_eighteen"
+                                                                                    id="less_than_eighteen" onkeyup="return trim(this)" class="form-control"
+                                                                                    placeholder="Please enter age less than 18"
+                                                                                    value="<%= Object.keys(influencerStatiscsArr).length>0 && influencerStatiscsArr.less_than_eighteen?influencerStatiscsArr.less_than_eighteen:"" %>"
+                                                                                    >
+                                                                                    <div class="less_than_eighteen_error error" id="less_than_eighteen_error"></div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-lg-2">18 To 24<span
+                                                                                    class="text-danger">*</span></label>
+                                                                            <div class="col-lg-10">
+                                                                                <input type="number" onkeyup="return trim(this)" min="1" max="100" name="eighteen_to_twentyFour"
+                                                                                    id="eighteen_to_twentyFour" class="form-control"
+                                                                                    placeholder="Please enter age in between 18 to 24"
+                                                                                    value="<%= Object.keys(influencerStatiscsArr).length>0 && influencerStatiscsArr.eighteen_to_twentyFour?influencerStatiscsArr.eighteen_to_twentyFour:"" %>"
+                                                                                    >
+                                                                                    <div class="eighteen_to_twentyFour_error error" id="eighteen_to_twentyFour_error"></div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-lg-2">25 To 34<span
+                                                                                    class="text-danger">*</span></label>
+                                                                            <div class="col-lg-10">
+                                                                                <input type="number" onkeyup="return trim(this)" name="twentyFive_to_thirtyFour"
+                                                                                id="twentyFive_to_thirtyFour" min="1" max="100"
+                                                                                    value="<%= Object.keys(influencerStatiscsArr).length>0 && influencerStatiscsArr.twentyFive_to_thirtyFour?influencerStatiscsArr.twentyFive_to_thirtyFour:"" %>"
+                                                                                    class="form-control"
+                                                                                    placeholder="Please enter age in between 25 to 34"
+                                                                                    >
+                                                                                    <div class="twentyFive_to_thirtyFour_error error" id="twentyFive_to_thirtyFour_error"></div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-lg-2">35 To 44<span class="text-danger">*</span></label>
+                                                                            <div class="col-lg-10">
+                                                                                <input type="number" onkeyup="return trim(this)" name="thirtyFive_to_fourtyFour" id="thirtyFive_to_fourtyFour"
+                                                                                min="1" max="100" 
+                                                                                    value="<%= Object.keys(influencerStatiscsArr).length>0 && influencerStatiscsArr.thirtyFive_to_fourtyFour?influencerStatiscsArr.thirtyFive_to_fourtyFour:"" %>"
+                                                                                    class="form-control" placeholder="Please enter age in between 35 to 44">
+                                                                                <div class="thirtyFive_to_fourtyFour_error error" id="thirtyFive_to_fourtyFour_error"></div>
+                                                                                </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-lg-2">More than 44<span class="text-danger">*</span></label>
+                                                                            <div class="col-lg-10">
+                                                                                <input type="number" onkeyup="return trim(this)" name="moreThan_fourtyFour" id="moreThan_fourtyFour"
+                                                                                min="1" max="100" 
+                                                                                    value="<%= Object.keys(influencerStatiscsArr).length>0 && influencerStatiscsArr.moreThan_fourtyFour?influencerStatiscsArr.moreThan_fourtyFour:"" %>"
+                                                                                    class="form-control" placeholder="Please enter age more than 44">
+                                                                                <div class="moreThan_fourtyFour_error error" id="moreThan_fourtyFour_error"></div>
+                                                                                </div>
+                                                                        </div>
+                                                                        <legend class="text-bold">
+                                                                            Gender Repartition
+                                                                        </legend>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-lg-2">Male (%)<span class="text-danger">*</span></label>
+                                                                            <div class="col-lg-10">
+                                                                                <input type="number" onkeyup="return trim(this)" name="male" min="1" max="100"
+                                                                                id="male" value="<%= Object.keys(influencerStatiscsArr).length>0 && influencerStatiscsArr.male?influencerStatiscsArr.male:"" %>"
+                                                                                    class="form-control" placeholder="Please enter number of male in percentage">
+                                                                                <div class="male_error error" id="male_error"></div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-lg-2">Female (%)<span class="text-danger">*</span></label>
+                                                                            <div class="col-lg-10">
+                                                                                <input type="number" onkeyup="return trim(this)" id="female" name="female" min="1" max="100"
+                                                                                    value="<%= Object.keys(influencerStatiscsArr).length>0 && influencerStatiscsArr.female?influencerStatiscsArr.female:"" %>"
+                                                                                    class="form-control" placeholder="Please enter number of female in percentage">
+                                                                                    <div class="female_error error" id="female_error"></div>
+                                                                            </div>
+                                                                        </div>  
+                                                                        <input type="hidden" id="locationViewLength"
+                                                                            value="<%= Object.keys(influencerStatiscsArr).length>0 && influencerStatiscsArr.locationStatisticsArr?influencerStatiscsArr.locationStatisticsArr.length:"" %>">
+                                                                        <div id="location_view_div">
+                                                                            <% if(Object.keys(influencerStatiscsArr).length==0){ %>
+                                                                            <div id="hide_show_div_0">
+                                                                                <legend class="text-bold">
+                                                                                    Location of followers
+                                                                                </legend>
+                                                                            <div class="row">
+                                                                                <div class="col-sm-6"><strong>Country</strong></div>
+                                                                                <div class="col-sm-6"><strong>Percentage</strong></div>
+                                                                            </div>
+                                                                                <div class="form-group ml-5 mt-5">
+                                                                                    <!-- <label class="control-label col-lg-2">Country<span class="text-danger">*</span></label> -->
+                                                                                    <div class="col-lg-6">
+                                                                                        <input name="country_one"
+                                                                                           id="country_one_0" onkeyup="return trim(this)" class="form-control" placeholder="Please enter country with percentage of followers">
+                                                                                    </div>
+                                                                                    <div class="col-lg-6">
+                                                                                        <input type="number" min="1" max="100"  name="country_one_percentage" id="countryPercentage_0" onkeyup="return trim(this)" class="form-control"
+                                                                                            placeholder="Please enter percentage of country">
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="form-group ml-5">
+                                                                                    <!-- <label class="control-label col-lg-2">Country<span class="text-danger">*</span></label> -->
+                                                                                    <div class="col-lg-6">
+                                                                                        <input name="country_two" onkeyup="return trim(this)" id="country_two_0" class="form-control" placeholder="Please enter country with percentage of followers">
+                                                                                    </div>
+                                                                                    <div class="col-lg-6">
+                                                                                        <input type="number" min="1" max="100"  name="country_two_percentage" id="countryPercentage_two_0" onkeyup="return trim(this)" class="form-control"
+                                                                                            placeholder="Please enter percentage of country">
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="form-group ml-5">
+                                                                                    <!-- <label class="control-label col-lg-2">Country<span class="text-danger">*</span></label> -->
+                                                                                    <div class="col-lg-6">
+                                                                                        <input name="country_three" onkeyup="return trim(this)" id="country_three_0" class="form-control" placeholder="Please enter country with percentage of followers">
+                                                                                    </div>
+                                                                                    <div class="col-lg-6">
+                                                                                        <input type="number" min="1" max="100"  name="country_three_percentage" id="countryPercentage_three_0" onkeyup="return trim(this)" class="form-control"
+                                                                                            placeholder="Please enter percentage of country">
+                                                                                    </div>
+                                                                                </div>
+                                                                               
+                                                                            <div class="row">
+                                                                                <div class="col-sm-6"><strong>City</strong></div>
+                                                                                <div class="col-sm-6"><strong>Percentage</strong></div>
+                                                                            </div>
+                                                                                <div class="form-group ml-5 mt-5">
+                                                                                    <!-- <label class="control-label col-lg-2">City<span class="text-danger">*</span></label> -->
+                                                                                    <div class="col-lg-6">
+                                                                                        <input type="text" onkeyup="return trim(this)" id="city_one_0" name="city_one" class="form-control" placeholder="Please enter city with percentage of followers">
+                                                                                    </div>
+                                                                                    <div class="col-lg-6">
+                                                                                        <input type="number" min="1" max="100"  type="text" onkeyup="return trim(this)" id="cityPercentage_one_0" name="city_one_percentage" class="form-control"
+                                                                                            placeholder="Please enter percentage of city">
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="form-group ml-5">
+                                                                                    <!-- <label class="control-label col-lg-2">City<span class="text-danger">*</span></label> -->
+                                                                                    <div class="col-lg-6">
+                                                                                        <input type="text" onkeyup="return trim(this)" id="city_two_0" name="city_two" class="form-control" placeholder="Please enter city with percentage of followers">
+                                                                                    </div>
+                                                                                    <div class="col-lg-6">
+                                                                                        <input type="number" min="1" max="100"  onkeyup="return trim(this)" id="cityPercentage_two_0" name="city_two_percentage"
+                                                                                            class="form-control" placeholder="Please enter percentage of city">
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="form-group ml-5">
+                                                                                    <!-- <label class="control-label col-lg-2">City<span class="text-danger">*</span></label> -->
+                                                                                    <div class="col-lg-6">
+                                                                                        <input type="text" id="city_three_0" name="city_three" onkeyup="return trim(this)" class="form-control"
+                                                                                            placeholder="Please enter city with percentage of followers">
+                                                                                    </div>
+                                                                                    <div class="col-lg-6">
+                                                                                        <input type="number" min="1" max="100"  onkeyup="return trim(this)" id="cityPercentage_three_0" name="city_three_percentage"
+                                                                                            class="form-control" placeholder="Please enter percentage of city">
+                                                                                    </div>
+                                                                                </div>
+
+
+                                                                                <legend class="text-bold">
+                                                                                
+                                                                                </legend>
+                                                                            </div>
+                                                                            <% } %>
+                                                                                
+
+
+                                                                            
+
+                                                                            <% for(let i in influencerStatiscsArr.locationStatisticsArr){
+                                                                                %>
+                                                                            <div id="hide_show_div_<%= i %>">
+                                                                                <legend class="text-bold">
+                                                                                    Location of followers
+                                                                                </legend>
+                                                                                <div class="row">
+                                                                                    <div class="col-sm-6"><strong>Country</strong></div>
+                                                                                    <div class="col-sm-6"><strong>Percentage</strong></div>
+                                                                                </div>
+                                                                                
+                                                                                <div class="form-group ml-5 mt-5">
+                                                                                    
+                                                                                    <div class="col-lg-6">
+                                                                                        <input name="country_one" onkeyup="return trim(this)" id="country_one_<%= i %>" class="form-control" placeholder="Please enter age country" value="<%= influencerStatiscsArr.locationStatisticsArr[i].country_one %>">
+                                                                                        <div class="country_div_error_<%= i %> error"></div>
+                                                                                    </div>
+                                                                                    <div class="col-lg-6">
+                                                                                        <input type="number" min="1" max="100" name="country_one_percentage" onkeyup="return trim(this)" id="countryPercentage_one_<%= i %>" class="form-control"
+                                                                                            placeholder="Please enter age country"
+                                                                                            value="<%= influencerStatiscsArr.locationStatisticsArr[i].country_one_percentage %>">
+                                                                                        <div class="country_percentage_div_error_<%= i %> error"></div>
+                                                                                    </div>
+                                                                                </div>
+
+
+                                                                                <div class="form-group ml-5">
+                                                                                    
+                                                                                    <div class="col-lg-6">
+                                                                                        <input name="country_two" onkeyup="return trim(this)" id="country_two_<%= i %>" class="form-control" placeholder="Please enter age country"
+                                                                                            value="<%= influencerStatiscsArr.locationStatisticsArr[i].country_two %>">
+                                                                                        <div class="country_div_error_<%= i %> error"></div>
+                                                                                    </div>
+                                                                                    <div class="col-lg-6">
+                                                                                        <input type="number" min="1" max="100" name="country_two_percentage" onkeyup="return trim(this)" id="countryPercentage_two_<%= i %>"
+                                                                                            class="form-control" placeholder="Please enter age country"
+                                                                                            value="<%= influencerStatiscsArr.locationStatisticsArr[i].country_two_percentage %>">
+                                                                                        <div class="country_percentage_div_error_<%= i %> error"></div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="form-group ml-5">
+                                                                                    
+                                                                                    <div class="col-lg-6">
+                                                                                        <input name="country_three" onkeyup="return trim(this)" id="country_three_<%= i %>" class="form-control" placeholder="Please enter age country"
+                                                                                            value="<%= influencerStatiscsArr.locationStatisticsArr[i].country_three %>">
+                                                                                        <div class="country_div_error_<%= i %> error"></div>
+                                                                                    </div>
+                                                                                    <div class="col-lg-6">
+                                                                                        <input type="number" min="1" max="100" name="country_three_percentage" onkeyup="return trim(this)" id="countryPercentage_three_<%= i %>"
+                                                                                            class="form-control" placeholder="Please enter age country"
+                                                                                            value="<%= influencerStatiscsArr.locationStatisticsArr[i].country_three_percentage %>">
+                                                                                        <div class="country_percentage_div_error_<%= i %> error"></div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                    <div class="col-sm-6"><strong>City</strong></div>
+                                                                                    <div class="col-sm-6"><strong>Percentage</strong></div>
+                                                                                </div>
+                                                                                <div class="form-group ml-5 mt-5">
+                                                                                   
+                                                                                    <div class="col-lg-6">
+                                                                                        <input type="text" onkeyup="return trim(this)" id="city_one_<%= i %>" name="city_one" class="form-control"
+                                                                                            placeholder="Please enter Location of viewers in percentage" value="<%= influencerStatiscsArr.locationStatisticsArr[i].city_one %>">
+                                                                                            <div class="city_div_error_<%= i %> error"></div>
+                                                                                    </div>
+                                                                                    <div class="col-lg-6">
+                                                                                        <input type="number" min="1" max="100" onkeyup="return trim(this)" id="cityPercentage_one_<%= i %>" name="city_one_percentage" class="form-control"
+                                                                                            placeholder="Please enter percentage of city"
+                                                                                            value="<%= influencerStatiscsArr.locationStatisticsArr[i].city_one_percentage %>">
+                                                                                        <div class="city_percentage_div_error_<%= i %> error"></div>
+                                                                                    </div>
+                                                                                </div>
+
+
+                                                                                <div class="form-group ml-5">
+                                                                                   
+                                                                                    <div class="col-lg-6">
+                                                                                        <input type="text" id="city_two_<%= i %>" name="city_two" onkeyup="return trim(this)" class="form-control"
+                                                                                            placeholder="Please enter Location of viewers in percentage"
+                                                                                            value="<%= influencerStatiscsArr.locationStatisticsArr[i].city_two %>">
+                                                                                        <div class="city_div_error_<%= i %> error"></div>
+                                                                                    </div>
+                                                                                    <div class="col-lg-6">
+                                                                                        <input type="number" min="1" max="100" onkeyup="return trim(this)" id="cityPercentage_two_<%= i %>" name="city_two_percentage"
+                                                                                            class="form-control" placeholder="Please enter percentage of city"
+                                                                                            value="<%= influencerStatiscsArr.locationStatisticsArr[i].city_two_percentage %>">
+                                                                                        <div class="city_percentage_div_error_<%= i %> error"></div>
+                                                                                    </div>
+                                                                                </div>
+
+
+                                                                                <div class="form-group ml-5">
+                                                                                   
+                                                                                    <div class="col-lg-6">
+                                                                                        <input type="text" id="city_three_<%= i %>" name="city_three" onkeyup="return trim(this)" class="form-control"
+                                                                                            placeholder="Please enter Location of viewers in percentage"
+                                                                                            value="<%= influencerStatiscsArr.locationStatisticsArr[i].city_three %>">
+                                                                                        <div class="city_div_error_<%= i %> error"></div>
+                                                                                    </div>
+                                                                                    <div class="col-lg-6">
+                                                                                        <input type="number" min="1" max="100" onkeyup="return trim(this)" id="cityPercentage_three_<%= i %>" name="city_three_percentage"
+                                                                                            class="form-control" placeholder="Please enter percentage of city"
+                                                                                            value="<%= influencerStatiscsArr.locationStatisticsArr[i].city_three_percentage %>">
+                                                                                        <div class="city_percentage_div_error_<%= i %> error"></div>
+                                                                                        </div>
+                                                                                </div>
+
+                                                                                <% if(i!=0){ %>
+                                                                                <button type="button" class="btn btn-danger" onclick="remove('<%= i %>')" id="addSubRenovation">Remove</button>
+                                                                                <% } %>
+                                                                                <legend class="text-bold">
+                                                                                    
+                                                                                </legend>
+                                                                            </div>
+                                                                                <% }  %>
+                                                                              
+                                                                        </div>
+                                                                        
+                                                                       
+                                                                        
+
+
+
+
+
+
+
+
+
+
+                                                                        
+                                                                        <div class="text-right">
+                                                                            <% if(type===1 || (type===4 &&
+                                                                                permi.indexOf('add')>= 0)) { %>
+                                                                                    <button type="submit" class="btn btn-primary"><%= Object.keys(influencerStatiscsArr).length>0 ? "Update":"Add" %>
+                                                                                    </button>
+                                                                            <% } %>
+                                                                            <a href="/admin/influencer/statistics" style="background-color: #8080808c; color: black;" type="submit" class="btn btn-secondary">
+                                                                                Back
+                                                                            </a>
+                                                                        </div>
+                                                                    </fieldset>
+                                                                </form>
+                                                                <%-include('../partials/footer')%>
+                                                            </div>
+                                                            <!-- /content area -->
+                                                        </div>
+                                                        <!-- /main content -->
+                                                    </div>
+                                                    <!-- /page content -->
+                                                </div>
+                                                <!-- /page container -->
+                                                </body>
+
+                                                </html>
+
+
+
+                                                <script src="/assets/js/influencer_statistics/location_statistics.js"></script>
+                                               
+                                                <script
+                                                    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

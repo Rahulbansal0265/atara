@@ -1,0 +1,429 @@
+<%- include ("../partials/header") %>
+    <style>
+        .accor_check .panel-heading .accordion-toggle:after {
+            /* symbol for "opening" panels */
+            font-family: "Glyphicons Halflings";
+            /* essential for enabling glyphicon */
+            content: "\e114";
+            /* adjust as needed, taken from bootstrap.css */
+            float: right;
+            /* adjust as needed */
+            color: white;
+            /* adjust as needed */
+        }
+
+        .accor_check .panel-heading .accordion-toggle.collapsed:after {
+            /* symbol for "collapsed" panels */
+            content: "\e080";
+            /* adjust as needed, taken from bootstrap.css */
+        }
+
+        .accor_check .panel-body {
+            border-top: none !important;
+            padding-left: 40px;
+        }
+
+        .accor_check .panel-heading {
+            background-color: black;
+
+        }
+
+        .accor_check h3 {
+            font-size: 22px;
+            color: yellow;
+            margin: 0;
+            display: flex;
+            justify-content: start;
+            align-items: center;
+        }
+
+        .accor_check h3 input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin: 0 10px 0 0px;
+        }
+
+        .accor_check h3 label {
+            font-size: 20px;
+            font-weight: bold;
+            color: yellow;
+            margin-bottom: 0;
+        }
+
+        .accor_check h3 a {
+            margin-left: auto;
+        }
+
+        .accor_check h4 {
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            margin: 0;
+        }
+
+        .accor_check h4 input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            margin: 0 10px 0 0px;
+        }
+
+        .accor_check h4 label {
+            font-size: 18px;
+            color: black;
+            margin-bottom: 0;
+        }
+
+
+
+        .accor_check .sub_c {
+            padding-left: 20px;
+            padding-top: 10px;
+        }
+    </style>
+    <div class="page-container">
+        <div class="page-content">
+            <%- include ("../partials/sidebar") %>
+                <div class="content-wrapper">
+                    <div class="page-header page-header-default">
+                        <div class="page-header-content">
+                            <div class="page-title">
+                                <h4>
+                                    <a href="javascript:history.go(-1);">
+                                        <i class="icon-arrow-left52 position-left"></i>
+                                    </a>
+                                    <span class="text-semibold">Permissions</span>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="content">
+                        <div class="panel-group" id="accordion">
+                            <form action="/admin/sub_admins/addPostpermission" method="post">
+                                <input type="hidden" name="sub_admin_id" value="<%= sub_admin_id %>">
+                                <div class="panel panel-default accor_check">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">
+                                            <input type="checkbox" onclick="subModuleCheck(this,'1')" name="module" value="user" id="check_user" <%= permissionArr.module.includes("user")?"checked":"" %> > <label for="check_user">User</label>
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"
+                                                href="#collapse_1">
+                                            </a>
+                                        </h3>
+                                    </div>
+                                    <div id="collapse_1" class="panel-collapse collapse in">
+                                        <div class="panel-body">
+                                            <h4><input onclick="moduleCheck(this,'1')" type="checkbox" name="sub_module" value="influencer" id="check_influencer" <%= permissionArr.sub_module.includes("influencer")?"checked":"" %>> <label
+                                                    for="check_influencer">Influencers</label></h4>
+
+                                            <div class="sub_c" id="module_1">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <input type="checkbox" name="influencer" id="check_influencer_view" value="view" <%= "influencer" in permissionArr.child && permissionArr.child.influencer.includes("view")?"checked":"" %>> <label
+                                                            for="check_influencer_view">View</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="checkbox" name="influencer" id="check_influencer_delete" value="delete" <%= "influencer" in permissionArr.child && permissionArr.child.influencer.includes("delete")?"checked":"" %>> <label
+                                                            for="check_influencer_delete">Delete</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-body">
+                                            <h4><input type="checkbox" onclick="moduleCheck(this,'2')" name="sub_module" value="influencer_statistics" id="check_influencer_statistic" <%= permissionArr.sub_module.includes("influencer_statistics")?"checked":"" %>> <label
+                                                    for="check_influencer_statistic">Influencer
+                                                    Statistics</label></h4>
+
+                                            <div class="sub_c" id="module_2">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <input type="checkbox" name="influencer_statistic" id="check_influencer_statistic_add" value="add" <%= "influencer_statistic" in permissionArr.child && permissionArr.child.influencer_statistic.includes("add")?"checked":"" %>>
+                                                        <label for="check_influencer_statistic_add">Add</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="checkbox" name="influencer_statistic" value="edit" id="check_influencer_statistic_edit" <%= "influencer_statistic" in permissionArr.child && permissionArr.child.influencer_statistic.includes("edit")?"checked":"" %>>
+                                                        <label for="check_influencer_statistic_edit">Edit</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="checkbox" name="influencer_statistic" value="delete" id="check_influencer_statistic_delete" <%= "influencer_statistic" in permissionArr.child && permissionArr.child.influencer_statistic.includes("delete")?"checked":"" %>>
+                                                        <label for="check_influencer_statistic_delete">Delete</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="checkbox" name="influencer_statistic" value="view" id="check_influencer_statistic_view" <%= "influencer_statistic" in permissionArr.child && permissionArr.child.influencer_statistic.includes("view")?"checked":"" %>>
+                                                        <label for="check_influencer_statistic_view">View</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-body">
+                                            <h4><input type="checkbox" onclick="moduleCheck(this,'3')" name="sub_module" value="professional" id="check_professional" <%= permissionArr.sub_module.includes("professional")?"checked":"" %>> <label
+                                                    for="check_professional">Professionals</label></h4>
+
+                                            <div class="sub_c" id="module_3">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <input type="checkbox" name="professional" value="add" id="check_professional_add" <%= "professional" in permissionArr.child && permissionArr.child.professional.includes("add")?"checked":"" %>> <label
+                                                            for="check_professional_add">Add</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="checkbox" name="professional" value="edit" id="check_professional_edit" <%= "professional" in permissionArr.child && permissionArr.child.professional.includes("edit")?"checked":"" %>> <label
+                                                            for="check_professional_edit">Edit</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="checkbox" id="check_professional_delete" name="professional" value="delete" <%= "professional" in permissionArr.child && permissionArr.child.professional.includes("delete")?"checked":"" %>> <label
+                                                            for="check_professional_delete">Delete</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="checkbox" name="professional" value="view" id="check_professional_view" <%= "professional" in permissionArr.child && permissionArr.child.professional.includes("view")?"checked":"" %>> <label
+                                                            for="check_professional_view">View</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+                                <div class="panel panel-default accor_check">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">
+                                            <input type="checkbox" onclick="subModuleCheck(this,'2')" name="module" value="business" id="check_business" <%= permissionArr.module.includes("business")?"checked":"" %>> <label
+                                                for="check_business">Business</label>
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"
+                                                href="#collapse_2">
+                                            </a>
+                                        </h3>
+                                    </div>
+                                    <div id="collapse_2" class="panel-collapse collapse in">
+                                        <div class="panel-body">
+
+                                            <div class="sub_c">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <input type="checkbox" name="business" value="add" id="check_business_add" <%= "business" in permissionArr.child && permissionArr.child.business.includes("add")?"checked":"" %>> <label
+                                                            for="check_business_add">Add</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="checkbox" name="business" value="edit" id="check_business_edit" <%= "business" in permissionArr.child && permissionArr.child.business.includes("edit")?"checked":"" %>> <label
+                                                            for="check_business_edit">Edit</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="checkbox" name="business" value="delete" id="check_business_delete" <%= "business" in permissionArr.child && permissionArr.child.business.includes("delete")?"checked":"" %>> <label
+                                                            for="check_business_delete">Delete</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="checkbox" name="business" value="view" id="check_business_view" <%= "business" in permissionArr.child && permissionArr.child.business.includes("view")?"checked":"" %>> <label
+                                                            for="check_business_view">View</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+                                <div class="panel panel-default accor_check">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">
+                                            <input type="checkbox" name="module" onclick="subModuleCheck(this,'3')" value="offer" id="check_offer" <%= permissionArr.module.includes("offer")?"checked":"" %>> <label
+                                                for="check_offer">Offer</label>
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"
+                                                href="#collapse_3">
+                                            </a>
+                                        </h3>
+                                    </div>
+                                    <div id="collapse_3" class="panel-collapse collapse in">
+                                        <div class="panel-body">
+
+                                            <div class="sub_c">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <input type="checkbox" name="offer" value="add" id="check_offer_add" <%= "offer" in permissionArr.child && permissionArr.child.offer.includes("add")?"checked":"" %>> <label
+                                                            for="check_offer_add">Add</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="checkbox" name="offer" value="edit" id="check_offer_edit" <%= "offer" in permissionArr.child && permissionArr.child.offer.includes("edit")?"checked":"" %>> <label
+                                                            for="check_offer_edit">Edit</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="checkbox" name="offer" value="delete" id="check_offer_delete" <%= "offer" in permissionArr.child && permissionArr.child.offer.includes("delete")?"checked":"" %>> <label
+                                                            for="check_offer_delete">Delete</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="checkbox" name="offer" value="view" id="check_offer_view" <%= "offer" in permissionArr.child && permissionArr.child.offer.includes("view")?"checked":"" %>> <label
+                                                            for="check_offer_view">View</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="panel panel-default accor_check">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">
+                                            <input type="checkbox" name="module" onclick="subModuleCheck(this,'4')" value="category" id="check_category" <%= permissionArr.module.includes("category")?"checked":"" %>> <label
+                                                for="check_category">Category</label>
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"
+                                                href="#collapse_4">
+                                            </a>
+                                        </h3>
+                                    </div>
+                                    <div id="collapse_4" class="panel-collapse collapse in">
+                                        <div class="panel-body">
+
+                                            <div class="sub_c">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <input type="checkbox" name="category" value="add" value="add" id="check_category_add" <%= "category" in permissionArr.child && permissionArr.child.category.includes("add")?"checked":"" %>> <label
+                                                            for="check_category_add">Add</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="checkbox" name="category" value="edit" id="check_category_edit" <%= "category" in permissionArr.child && permissionArr.child.category.includes("edit")?"checked":"" %>> <label
+                                                            for="check_category_edit">Edit</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="checkbox" name="category" value="delete" id="check_category_delete" <%= "category" in permissionArr.child && permissionArr.child.category.includes("delete")?"checked":"" %>> <label
+                                                            for="check_category_delete">Delete</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="checkbox" name="category" value="view" id="check_category_view" <%= "category" in permissionArr.child && permissionArr.child.category.includes("view")?"checked":"" %>> <label
+                                                            for="check_category_view">View</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="panel panel-default accor_check">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">
+                                            <input type="checkbox" name="module" onclick="subModuleCheck(this,'5')" id="check_statistic" value="statistics" <%= permissionArr.module.includes("statistics")?"checked":"" %>> <label
+                                                for="check_statistic">Statistics</label>
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"
+                                                href="#collapse_5">
+                                            </a>
+                                        </h3>
+                                    </div>
+                                    <div id="collapse_5" class="panel-collapse collapse in">
+                                        <div class="panel-body">
+
+                                            <div class="sub_c">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <input type="checkbox" name="statistic" value="add" id="check_statistic_add" <%= "statistic" in permissionArr.child && permissionArr.child.statistic.includes("add")?"checked":"" %>> <label
+                                                            for="check_statistic_add">Add</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="checkbox" name="statistic" value="edit" id="check_statistic_edit" <%= "statistic" in permissionArr.child && permissionArr.child.statistic.includes("edit")?"checked":"" %>> <label
+                                                            for="check_statistic_edit">Edit</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="checkbox" name="statistic" value="delete" id="check_statistic_delete" <%= "statistic" in permissionArr.child && permissionArr.child.statistic.includes("delete")?"checked":"" %>> <label
+                                                            for="check_statistic_delete">Delete</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="checkbox" name="statistic" value="view" id="check_statistic_view" <%= "statistic" in permissionArr.child && permissionArr.child.statistic.includes("view")?"checked":"" %>> <label
+                                                            for="check_statistic_view">View</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="panel panel-default accor_check">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">
+                                            <input type="checkbox" name="module" onclick="subModuleCheck(this,'6')" id="check_booking" value="booking" <%= permissionArr.module.includes("booking")?"checked":"" %>> <label
+                                                for="check_booking">Booking</label>
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"
+                                                href="#collapseSix">
+                                            </a>
+                                        </h3>
+                                    </div>
+                                    <div id="collapse_6" class="panel-collapse collapse in">
+                                        <div class="panel-body">
+
+                                            <div class="sub_c">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <input type="checkbox" name="booking" value="view" id="check_booking_add" <%= "booking" in permissionArr.child && permissionArr.child.booking.includes("view")?"checked":"" %>> <label
+                                                            for="check_booking_add">View</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="checkbox" name="booking" value="delete" id="check_booking_edit" <%= "booking" in permissionArr.child && permissionArr.child.booking.includes("delete")?"checked":"" %>> <label
+                                                            for="check_booking_edit">Delete</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-5">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <a href="/admin/sub_admins" style="background-color: #8080808c; color: black;"
+                                        type="submit" class="btn btn-secondary">
+                                        Back
+                                    </a>
+                                </div>
+                            </form>
+
+
+
+
+                        </div>
+                    </div>
+
+
+
+
+
+                </div>
+        </div>
+    </div>
+
+    <script>
+        function subModuleCheck(elem,index) {
+            if (elem.checked) {
+                $(`#collapse_${index} :input`).each((index, element) => {
+                    $(`#${element.id}`).prop("checked", true);
+                })
+            } else {
+                $(`#collapse_${index} :input`).each((index, element) => {
+                    $(`#${element.id}`).prop("checked", false);
+                })
+            }
+        }
+
+
+        function moduleCheck(elem,index) {
+            if (elem.checked) {
+                $(`#module_${index} :input`).each((index, element) => {
+                    $(`#${element.id}`).prop("checked", true);
+                })
+            } else {
+                $(`#module_${index} :input`).each((index, element) => {
+                    $(`#${element.id}`).prop("checked", false);
+                })
+            }
+        }
+    </script>
+    </body>
+
+    </html>

@@ -1,0 +1,170 @@
+
+
+    <%-include('../partials/header')%>
+
+    <!-- /main navbar -->
+
+    <!-- Page container -->
+    <div class="page-container">
+
+        <!-- Page content -->
+        <div class="page-content">
+
+            <!-- Main sidebar -->
+            <%-include('../partials/sidebar')%>
+                <!-- /main sidebar -->
+
+                <!-- Main content -->
+                <div class="content-wrapper">
+
+                    <!-- Page header -->
+                    <div class="page-header page-header-default">
+                        <div class="page-header-content">
+                            <div class="page-title">
+                                <h4> <a href="javascript:history.go(-1);"><i class="icon-arrow-left52 position-left"></i></a><span
+                                         class="text-semibold">Home</span> - Bookings</h4>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- /page header -->
+
+                    <!-- Content area -->
+                    <div class="content">
+
+                        <div class="panel panel-flat">
+                           
+
+                            <div class="panel-body">
+
+                                
+                                <form class="form-horizontal" id="basic-form" action="#" enctype="multipart/form-data"
+                                    method="post">
+                                    <fieldset class="content-group">
+                                        <legend class="text-bold">
+
+                                      View Bookings
+                                            
+                                          </legend>
+
+
+                                        <div class="form-group">
+                                            <div class="col-lg-2">Professional Name</div>
+                                           
+                                            <div class="col-lg-10">
+                                                <%=booking.professional.full_name%>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-lg-2">Influencer Name</div>
+                                           
+                                            <div class="col-lg-10">
+                                                <%=booking.influencer.full_name%>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-lg-2">Business Name</div>
+                                           
+                                            <div class="col-lg-10">
+                                                <%=booking.business.name%>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-lg-2">Message</div>
+                                           
+                                            <div class="col-lg-10">
+                                                <%=booking.message%>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-lg-2">Tell us about your experience</div>
+                                           
+                                            <div class="col-lg-10">
+                                                <%=booking.about_exp%>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <div class="col-lg-2">Content Status</div>
+                                           
+                                            <div class="col-lg-10">
+                                                
+                                                <% if(booking.storymad == 0){ %>
+                                                
+                                                        
+                                                    Content not Made
+                                                <% }else { %>
+                                                    Content Made
+                                                    
+                                                        
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-lg-2">Stat Status</div>
+                                           
+                                            <div class="col-lg-10">
+                                               
+                                                <% if(booking.stat == 0){ %>
+                                                
+                                                        
+                                                    Stat not received
+                                                <% }else { %>
+                                                            Stat received
+                                                    
+                                                        
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-lg-2">Was Influencer Present Status</div>
+                                           
+                                            <div class="col-lg-10">
+                                               
+                                                <% if(booking.was_influencer_present == 0){ %>
+                                                
+                                                        
+                                                    Influencer not present
+                                                <% }else { %>
+                                                    Influencer present
+                                                    
+                                                        
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                     
+
+                                        <div class="text-right">
+
+                                            <a href="/admin/bookings" style="background-color: #8080808c; color: black;" type="submit" class="btn btn-secondary">
+                                                Back
+                                            </a>
+                                        </div>
+                                </form>
+                            </div>
+                        </div>
+
+
+
+                        <!-- Footer -->
+                        <%-include('../partials/footer')%>
+                            <!-- /footer -->
+
+                    </div>
+                    <!-- /content area -->
+
+                </div>
+                <!-- /main content -->
+
+        </div>
+        <!-- /page content -->
+
+    </div>
+    <!-- /page container -->
+
+    </body>
+
+    </html>

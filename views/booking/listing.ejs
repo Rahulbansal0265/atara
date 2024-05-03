@@ -1,0 +1,720 @@
+<%- include ("../partials/header") %>
+    <div class="page-container">
+        <div class="page-content">
+            <%- include ("../partials/sidebar") %>
+                <div class="content-wrapper">
+                    <div class="page-header page-header-default">
+                        <div class="page-header-content">
+                            <div class="page-title">
+                                <h4>
+                                    <a href="javascript:history.go(-1);">
+                                        <i class="icon-arrow-left52 position-left"></i>
+                                    </a>
+                                    <span class="text-semibold">Bookings</span>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div class="panel panel-flat">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Listing</h3>
+                            </div>
+                            <input type="hidden" id="permission" value="<%= JSON.stringify(global.permission) %>">
+                            <table id="booking_datatable" class="table datatable-selection-single">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Sr. No.</th>
+                                        <th class="text-center">Professional Name</th>
+                                        <th class="text-center">Influencer Name</th>
+                                        <th class="text-center">Business Name</th>
+                                        <th class="text-center">Message</th>
+                                        <th class="text-center">Was Influencer Present Status</th>
+                                        <th class="text-center">Was The Content Made</th>
+                                        <th class="text-center">Stat Status</th>
+                                        <th class="text-center" data-orderable="false">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% 
+                                        var j=0
+                                        bookinglisting.forEach((users,i)=>{%>
+                                        <tr>
+
+                                            <td class="text-center">
+                                                <%= j+1 %>
+                                            </td>
+                                            <td class="text-center">
+                                                <%=users.professional.full_name%>
+                                            </td>
+
+                                            <td class="text-center">
+                                                <%=users.influencer.full_name%>
+                                            </td>
+
+                                            <td class="text-center">
+                                                <%=users.business.name%>
+                                            </td>
+
+                                            <td class="text-center">
+                                                <%=users.message%>
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="form-group">
+                                                    <div class="control-label"></div>
+                                                    <label class="custom-switch mt-2">
+                                                        <input onclick="presentStatus('<%=users.id %>',this)"
+                                                            type="checkbox" name="custom-switch-checkbox"
+                                                            class="custom-switch-input"
+                                                            <%=users.was_influencer_present==1?"checked":"" %>>
+                                                        <span class="custom-switch-indicator"></span>
+                                                    </label>
+                                                </div>
+
+                                            </td>
+
+
+                                            <td class="text-center">
+                                                <div class="form-group">
+                                                    <div class="control-label"></div>
+                                                    <label class="custom-switch mt-2">
+                                                        <input onclick="contentMade('<%=users.id %>',this)"
+                                                            type="checkbox" name="custom-switch-checkbox"
+                                                            class="custom-switch-input"
+                                                            <%=users.storymad==1?"checked":"" %>>
+                                                        <span class="custom-switch-indicator"></span>
+                                                    </label>
+                                                </div>
+
+                                            </td>
+
+
+                                            <td class="text-center">
+                                                <div class="form-group">
+                                                    <div class="control-label"></div>
+                                                    <label class="custom-switch mt-2">
+                                                        <input onclick="statStatus('<%=users.id %>',this)"
+                                                            type="checkbox" name="custom-switch-checkbox"
+                                                            class="custom-switch-input" <%=users.stat==1?"checked":""
+                                                            %>>
+                                                        <span class="custom-switch-indicator"></span>
+                                                    </label>
+                                                </div>
+
+                                            </td>
+
+
+
+
+
+
+
+
+
+                                            <td style="text-align:center;">
+                                                
+
+                                                <% 
+                                                if(global.type==4){
+                                                if(global.permission!='' && "booking" in global.permission.child &&
+                                                    global.permission.child.booking.includes('view')){ %>
+
+                                                <a href="/admin/bookings/viewbooking/<%=users.id%>"
+                                                    class="btn btn-info"><i class="icon-eye"></i></a>
+                                                    <% } %>
+
+
+                                                    <% if(global.permission!='' && "booking" in global.permission.child &&
+                                                        global.permission.child.booking.includes('delete')){ %>
+
+                                                <button onclick="deleteBooking('<%=users.id%>')" class="btn btn-danger 
+                                                    deletdat>"><i class="icon-trash Delete"></i></button>
+                                                    <% } }else{ %>
+                                                        <a href="/admin/bookings/viewbooking/<%=users.id%>" class="btn btn-info"><i class="icon-eye"></i></a>
+                                                        <button onclick="deleteBooking('<%=users.id%>')" class="btn btn-danger 
+                                                                                                            deletdat>"><i class="icon-trash Delete"></i></button>
+                                                        <% } %>
+
+
+                                            </td>
+
+
+                                        </tr>
+                                        <%})%>
+
+                                </tbody>
+
+                            </table>
+                        </div>
+
+                        <%- include ("../partials/footer") %>
+
+
+                    </div>
+                    <!-- /content area -->
+
+                </div>
+                <!-- /main content -->
+
+        </div>
+        <!-- /page content -->
+
+    </div>
+    <!-- /page container -->
+
+
+    <script>
+
+
+        function deleteBooking(id) {
+            bootbox.confirm("Do you really want to delete booking?", function (result) {
+                if (result) {
+                    $.post("/admin/bookings/delete", { id: id }, function (data, status) {
+                        if (data) {
+                            $(".table").load(location.href + " .table");
+                            // $(".dataTables_info").load(location.href + " .table");
+                            // iziToast.success({
+                            //     // title: "Success",
+                            //     message: "Booking deleted successfully",
+                            //     position: "topRight",
+                            // });
+                            location.reload()
+                        } else {
+                            $(".table").load(location.href + " .table");
+                            // $(".dataTables_info").load(location.href + " .table");
+                            location.reload()
+                            // iziToast.error({
+                            //     // title: "Success",
+                            //     message: "Booking not deleted",
+                            //     position: "topRight",
+                            // });
+                        }
+                    });
+                }
+            });
+        }
+
+
+
+
+
+        function presentStatus(id, elem) {
+            var status = 0;
+            if (elem.checked) {
+                status = 1
+            }
+
+            $.ajax({
+                type: "post",
+                url: "/admin/bookings/wasPresentInfluencer",
+                data: {
+                    id: id,
+                    status: status
+                },
+                beforeSend: function () {
+                    blockUI("#booking_datatable");
+                },
+                success: function (data) {
+                    unblockUI("#booking_datatable");
+                    if (data) {
+
+                        $(".table").load(location.href + " .table");
+                        iziToast.success({
+                            // title: "Success",
+                            message: "Status updated successfully",
+                            position: "topRight",
+                        });
+                    } else {
+                        iziToast.error({
+                            // title: "Error",
+                            message: "Status did not updated",
+                            position: "topRight",
+                        });
+                    }
+                }
+            });
+        }
+
+
+        function contentMade(id, elem) {
+            var status = 0;
+            if (elem.checked) {
+                status = 1
+            }
+
+            $.ajax({
+                type: "post",
+                url: "/admin/bookings/changeStoryStatus",
+                data: {
+                    id: id,
+                    status: status
+                },
+                beforeSend: function () {
+                    blockUI("#booking_datatable");
+                },
+                success: function (data) {
+                    unblockUI("#booking_datatable");
+                    if (data) {
+
+                        $(".table").load(location.href + " .table");
+                        iziToast.success({
+                            // title: "Success",
+                            message: "Status updated successfully",
+                            position: "topRight",
+                        });
+                    } else {
+                        iziToast.error({
+                            // title: "Error",
+                            message: "Status did not updated",
+                            position: "topRight",
+                        });
+                    }
+                }
+            });
+        }
+
+
+
+        function statStatus(id, elem) {
+            var status = 0;
+            if (elem.checked) {
+                status = 1
+            }
+
+            $.ajax({
+                type: "post",
+                url: "/admin/bookings/changesStatStatus",
+                data: {
+                    id: id,
+                    status: status
+                },
+                beforeSend: function () {
+                    blockUI("#booking_datatable");
+                },
+                success: function (data) {
+                    unblockUI("#booking_datatable");
+                    if (data) {
+
+                        $(".table").load(location.href + " .table");
+                        iziToast.success({
+                            // title: "Success",
+                            message: "Status updated successfully",
+                            position: "topRight",
+                        });
+                    } else {
+                        iziToast.error({
+                            // title: "Error",
+                            message: "Status did not updated",
+                            position: "topRight",
+                        });
+                    }
+                }
+            });
+        }
+
+
+
+
+
+
+
+
+
+        //    <THIS IS FOR STATUS ACTIVE INACTIVE WITH AJAX>
+
+        $('.working').click(function () {
+            console.log('------status')
+
+            var id = $(this).attr('data-id')
+            var value = $(this).attr('value')
+
+
+
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-danger',
+                    cancelButton: 'btn btn-success'
+                },
+                buttonsStyling: false
+            })
+            console.log("------------------------------result------", id);
+
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "You can revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, update it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((isConfirm) => {
+                // console.log(isConfirm)
+                // return
+                if (isConfirm.isConfirmed) {
+                    // alert('asd')
+                    $.ajax({
+                        type: "post",
+                        url: "/statusupdatebooking",
+                        data: {
+                            id: id,
+                            value: value
+                        },
+                        success: function (data) {
+                            location.reload();
+
+                        }
+                    });
+
+
+                    swalWithBootstrapButtons.fire(
+                        'Deleted!',
+                        'This status has been updated.',
+                        'success'
+                    ).then(() => {
+                        location.reload();
+                    })
+                } else {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        'Your imaginary status is safe :)',
+                        'error'
+                    )
+                }
+            })
+
+
+        });
+
+
+        //storymad not made
+        $('.storymad').click(function () {
+            console.log('------status')
+
+            var id = $(this).attr('data-id')
+            var value = $(this).attr('value')
+
+
+
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-danger',
+                    cancelButton: 'btn btn-success'
+                },
+                buttonsStyling: false
+            })
+            console.log("------------------------------result------", id);
+
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "You can revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, update it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((isConfirm) => {
+                // console.log(isConfirm)
+                // return
+                if (isConfirm.isConfirmed) {
+                    // alert('asd')
+                    $.ajax({
+                        type: "post",
+                        url: "/statusupdatestorymade",
+                        data: {
+                            id: id,
+                            value: value
+                        },
+                        success: function (data) {
+                            location.reload();
+
+                        }
+                    });
+
+
+                    swalWithBootstrapButtons.fire(
+                        'Updated!',
+                        'This story updated.',
+                        'success'
+                    ).then(() => {
+                        location.reload();
+                    })
+                } else {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        'Your imaginary story is safe :)',
+                        'error'
+                    )
+                }
+            })
+
+
+        });
+
+
+        //was influencer present status
+
+        $('.presentinfo').click(function () {
+            console.log('------status')
+
+            var id = $(this).attr('data-id')
+            var value = $(this).attr('value')
+
+
+
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-danger',
+                    cancelButton: 'btn btn-success'
+                },
+                buttonsStyling: false
+            })
+            console.log("------------------------------result------", id);
+
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "You can revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, update it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((isConfirm) => {
+                // console.log(isConfirm)
+                // return
+                if (isConfirm.isConfirmed) {
+                    // alert('asd')
+                    $.ajax({
+                        type: "post",
+                        url: "/statusupdatepresentinfo",
+                        data: {
+                            id: id,
+                            value: value
+                        },
+                        success: function (data) {
+                            location.reload();
+
+                        }
+                    });
+
+
+                    swalWithBootstrapButtons.fire(
+                        'Updated!',
+                        'Was influencer present status updated.',
+                        'success'
+                    ).then(() => {
+                        location.reload();
+                    })
+                } else {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        'Your imaginary data is safe :)',
+                        'error'
+                    )
+                }
+            })
+
+
+        });
+
+
+
+        //stat
+
+        $('.statusstat').click(function () {
+            console.log('------status')
+
+            var id = $(this).attr('data-id')
+            var value = $(this).attr('value')
+
+
+
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-danger',
+                    cancelButton: 'btn btn-success'
+                },
+                buttonsStyling: false
+            })
+            console.log("------------------------------result------", id);
+
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "You can revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, update it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((isConfirm) => {
+                // console.log(isConfirm)
+                // return
+                if (isConfirm.isConfirmed) {
+                    // alert('asd')
+                    $.ajax({
+                        type: "post",
+                        url: "/updatestatestatus",
+                        data: {
+                            id: id,
+                            value: value
+                        },
+                        success: function (data) {
+                            location.reload();
+
+                        }
+                    });
+
+
+                    swalWithBootstrapButtons.fire(
+                        'Updated!',
+                        'This Stat status updated.',
+                        'success'
+                    ).then(() => {
+                        location.reload();
+                    })
+                } else {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        'Your imaginary stat status is safe :)',
+                        'error'
+                    )
+                }
+            })
+
+
+        });
+
+        $('.statestatus').click(function () {
+            console.log('------status')
+
+            var id = $(this).attr('data-id')
+            var value = $(this).attr('value')
+
+
+
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-danger',
+                    cancelButton: 'btn btn-success'
+                },
+                buttonsStyling: false
+            })
+            console.log("------------------------------result------", id);
+
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "You can revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, update it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((isConfirm) => {
+                // console.log(isConfirm)
+                // return
+                if (isConfirm.isConfirmed) {
+                    // alert('asd')
+                    $.ajax({
+                        type: "post",
+                        url: "/updatestatestatus",
+                        data: {
+                            id: id,
+                            value: value
+                        },
+                        success: function (data) {
+                            location.reload();
+
+                        }
+                    });
+
+
+                    swalWithBootstrapButtons.fire(
+                        'Deleted!',
+                        'Stat status has been updated.',
+                        'success'
+                    ).then(() => {
+                        location.reload();
+                    })
+                } else {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        'Your imaginary status is safe :)',
+                        'error'
+                    )
+                }
+            })
+
+
+        });
+
+
+
+
+
+        // <THIS IS FOR DELETE SWEET ALERT>
+
+        function confirmDelete(id) {
+            console.log("------------------------------result------", id);
+
+
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-danger',
+                    cancelButton: 'btn btn-success'
+                },
+                buttonsStyling: false
+            })
+            console.log("------------------------------result------", id);
+
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((isConfirm) => {
+                // console.log(isConfirm)
+                // return
+                if (isConfirm.isConfirmed) {
+                    // alert('asd')
+                    $.ajax({
+
+                        url: "/deletebooking",
+                        method: 'delete',
+                        data: { id: id },
+                        success: function (result) {
+
+                        }
+
+
+                    });
+
+
+                    swalWithBootstrapButtons.fire(
+                        'Deleted!',
+                        'Your data has been deleted.',
+                        'success'
+                    ).then(() => {
+                        location.reload();
+                    })
+                } else {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        'Your imaginary data is safe :)',
+                        'error'
+                    )
+                }
+            })
+
+        }
+
+
+
+        var table = $("#booking_datatable").DataTable()
+
+    </script>
+
+    </body>
+
+    </html>

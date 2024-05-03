@@ -1,0 +1,397 @@
+<%-include('../partials/header')%>
+
+    <!-- /main navbar -->
+    <!-- Page container -->
+    <div class="page-container">
+
+        <!-- Page content -->
+        <div class="page-content">
+
+            <!-- Main sidebar -->
+
+            <%-include('../partials/sidebar')%>
+
+                <!-- /main sidebar -->
+
+                <!-- Main content -->
+                <div class="content-wrapper">
+
+                    <!-- Page header -->
+                    <div class="page-header page-header-default">
+                        <div class="page-header-content">
+                            <div class="page-title">
+                                <h4><a href="JavaScript:void(0)"><i class="icon-arrow-left52 position-left"></i>
+                                    </a><span class="text-semibold">Businesses</span></h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /page header -->
+
+                    <!-- Content area -->
+                    <div class="content">
+                        <div class="panel panel-flat">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Listing</h3>
+
+                            </div>
+<input type="hidden" id="permission" value="<%= JSON.stringify(global.permission) %>">
+<input type="hidden" id="type" value="<%= global.type %>">
+
+                            <table id="business_datatable" class="table datatable-selection-single">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Sr. No.</th>
+                                        <th class="text-center">Pro Name</th>
+
+                                        <th class="text-center">Business Name</th>
+                                        <th class="text-center">Location</th>
+                                        <!-- <th>Open Time</th> -->
+
+                                        <th class="text-center">Status</th>
+
+
+                                        <th class="text-center" data-orderable="false">Action</th>
+                                    </tr>
+                                </thead>
+
+
+                                <tbody>
+                                    <% 
+                                    var j=0
+                                        for(let i in businesslisting){ %>
+
+                                        <tr>
+                                            <td class="text-center">
+                                                <%= j+=1 %>
+                                            </td>
+
+                                            <td class="text-center">
+                                                <%= businesslisting[i].user.full_name %>
+
+                                            </td>
+
+                                            <td class="text-center">
+                                                <%= businesslisting[i].name %>
+
+                                            </td>
+                                            <td class="text-center">
+                                                <%= businesslisting[i].location %>
+
+                                            </td>
+
+
+
+
+                                            <td class="text-center">
+                                                <div class="form-group">
+                                                    <div class="control-label"></div>
+                                                    <label class="custom-switch mt-2">
+                                                        <input
+                                                            onclick="changeStatus('<%=businesslisting[i].id %>',this)"
+                                                            type="checkbox" name="custom-switch-checkbox"
+                                                            class="custom-switch-input"
+                                                            <%=businesslisting[i].status==1?"checked":"" %>>
+                                                        <span class="custom-switch-indicator"></span>
+                                                    </label>
+                                                </div>
+
+                                            </td>
+
+
+                                            <td style="text-align:center;">
+                                                
+                                                <% if(global.type==4){ if(global.permission!='' && "business" in
+                                                    global.permission.child &&
+                                                    global.permission.child.business.includes('view')){ %>
+                                                    <a href="/admin/businesses/viewbusiness/<%=businesslisting[i].id%>"
+                                                        class="btn btn-primary"><i class="icon-eye"></i></a>
+                                                    <% } %>
+
+                                                        <% if(global.permission!='' && "business" in
+                                                            global.permission.child &&
+                                                            global.permission.child.business.includes('edit')){ %>
+                                                            <a href="/admin/businesses/business/<%=businesslisting[i].id%>"
+                                                                class="btn btn-primary"><i class="icon-pencil"></i></a>
+                                                            <% } %>
+                                                                <% if(global.permission!='' && "business" in
+                                                                    global.permission.child &&
+                                                                    global.permission.child.business.includes('delete')){
+                                                                    %>
+
+                                                                    <button
+                                                                        onclick="deleteBusiness('<%=businesslisting[i].id%>')"
+                                                                        class="btn btn-danger 
+                                                     deletdat>"><i class="icon-trash Delete"></i></button>
+
+                                                                    <% } }else{ %>
+                                                                        <a href="/admin/businesses/viewbusiness/<%=businesslisting[i].id%>"
+                                                                            class="btn btn-primary"><i
+                                                                                class="icon-eye"></i></a>
+                                                                                <a href="/admin/businesses/business/<%=businesslisting[i].id%>" class="btn btn-primary"><i class="icon-pencil"></i></a>
+                                                                                <button onclick="deleteBusiness('<%=businesslisting[i].id%>')" class="btn btn-danger 
+                                                                                                                                     deletdat>"><i class="icon-trash Delete"></i></button>
+                                                                        <% } %>
+                                            </td>
+                                        </tr>
+                                        <%}%>
+
+                                </tbody>
+
+                            </table>
+
+
+                        </div>
+                        <%-include('../partials/footer')%>
+                    </div>
+                </div>
+        </div>
+    </div>
+    </body>
+
+    </html>
+    <script>
+
+
+
+        function deleteBusiness(id) {
+            bootbox.confirm("Do you really want to delete business?", function (result) {
+                if (result) {
+                    $.post("/admin/businesses/deletebusiness", { id: id }, function (data, status) {
+                        if (data) {
+                            $(".table").load(location.href + " .table");
+                            // iziToast.success({
+                            //     // title: "Success",
+                            //     message: "Business deleted successfully",
+                            //     position: "topRight",
+                            // });
+                            location.reload()
+                        } else {
+                            $(".table").load(location.href + " .table");
+                            location.reload()
+                            // iziToast.error({
+                            //     // title: "Success",
+                            //     message: "Business not deleted",
+                            //     position: "topRight",
+                            // });
+                        }
+                    });
+                }
+            });
+        }
+
+
+
+
+
+
+
+
+
+
+
+        // function confirmDelete(id) {
+        //     console.log("------------------------------result------", id);
+
+
+        //     const swalWithBootstrapButtons = Swal.mixin({
+        //         customClass: {
+        //             confirmButton: 'btn btn-danger',
+        //             cancelButton: 'btn btn-success'
+        //         },
+        //         buttonsStyling: false
+        //     })
+        //     console.log("------------------------------result------", id);
+
+        //     swalWithBootstrapButtons.fire({
+        //         title: 'Are you sure?',
+        //         text: "You won't be able to revert this!",
+        //         icon: 'warning',
+        //         showCancelButton: true,
+        //         confirmButtonText: 'Yes, delete it!',
+        //         cancelButtonText: 'No, cancel!',
+        //         reverseButtons: true
+        //     }).then((isConfirm) => {
+        //         // console.log(isConfirm)
+        //         // return
+        //         if (isConfirm.isConfirmed) {
+        //             // alert('asd')
+        //             $.ajax({
+
+        //                 url: "/businesses/deletebusiness",
+        //                 method: 'delete',
+        //                 data: { id: id },
+        //                 success: function (result) {
+
+        //                 }
+
+
+        //             });
+
+
+        //             swalWithBootstrapButtons.fire(
+        //                 'Deleted!',
+        //                 'This business has been deleted.',
+        //                 'success'
+        //             ).then(() => {
+        //                 location.reload();
+        //             })
+        //         } else {
+        //             swalWithBootstrapButtons.fire(
+        //                 'Cancelled',
+        //                 'Your imaginary business is safe :)',
+        //                 'error'
+        //             )
+        //         }
+        //     })
+
+        // }
+
+
+
+
+        //          $('.working').click(function () {
+        //      console.log('------status')
+
+        //     var id = $(this).attr('data-id')
+        //     var value = $(this).attr('value')
+
+
+
+        //         const swalWithBootstrapButtons = Swal.mixin({
+        //             customClass: {
+        //                 confirmButton: 'btn btn-danger',
+        //                 cancelButton: 'btn btn-success'
+        //             },
+        //             buttonsStyling: false
+        //         })
+        //         console.log("------------------------------result------", id);
+
+        //         swalWithBootstrapButtons.fire({
+        //             title: 'Are you sure?',
+        //             text: "You can revert this!",
+        //             icon: 'warning',
+        //             showCancelButton: true,
+        //             confirmButtonText: 'Yes, update it!',
+        //             cancelButtonText: 'No, cancel!',
+        //             reverseButtons: true
+        //         }).then((isConfirm) => {
+        //             // console.log(isConfirm)
+        //             // return
+        //             if (isConfirm.isConfirmed) {
+        //                 // alert('asd')
+        //                  $.ajax({
+        //         type: "post",
+        //         url: "/businesses/updateStatus",
+        //         data: {
+        //             id: id,
+        //             value: value
+        //         },
+        //         success: function (data) {
+        //             location.reload();
+
+        //         }
+        //     });
+
+
+        //                 swalWithBootstrapButtons.fire(
+        //                     'Deleted!',
+        //                     'This status has been updated.',
+        //                     'success'
+        //                 ).then(() => {
+        //                     location.reload();
+        //                 })
+        //             } else {
+        //                 swalWithBootstrapButtons.fire(
+        //                     'Cancelled',
+        //                     'Your imaginary status is safe :)',
+        //                     'error'
+        //                 )
+        //             }
+        //         })
+
+
+        // });
+
+
+        function changeStatus(id, elem) {
+            var status = 0;
+            if (elem.checked) {
+                status = 1
+            }
+
+            $.ajax({
+                type: "post",
+                url: "/admin/businesses/updateStatus",
+                data: {
+                    id: id,
+                    status: status
+                },
+                beforeSend: function () {
+                    blockUI("#business_datatable");
+                },
+                success: function (data) {
+                    unblockUI("#business_datatable");
+                    if (data) {
+
+                        $(".table").load(location.href + " .table");
+                        iziToast.success({
+                            // title: "Success",
+                            message: "Status updated successfully",
+                            position: "topRight",
+                        });
+                    } else {
+                        iziToast.error({
+                            // title: "Error",
+                            message: "Status did not updated",
+                            position: "topRight",
+                        });
+                    }
+                }
+            });
+        }
+
+
+
+
+
+
+        $('select').on('change', function () {
+            const order_id = this.getAttribute('orderid');
+            const product_id = this.getAttribute('productId');
+            var status = this.value;
+
+            $.ajax({
+                type: "POST",
+                url: "/orderstatusupdate",
+                data: { status: status, order_id: order_id, product_id: product_id },
+                success: function (data) {
+                    location.reload();
+                },
+                error: function (jqXHR, textStatus, err) {
+                    alert('text status ' + textStatus + ', err ' + err)
+                }
+            });
+        });
+
+        var table = $("#business_datatable").DataTable()
+        
+        var type=$("#type").val()
+
+        if(type==4){
+            var permission = JSON.parse($("#permission").val())
+            if (permission != '' && "business" in permission.child &&
+                permission.child.business.includes('add')) {
+
+                $("#business_datatable").before("<div class='row'><div class='col-sm-5' id='search_field'></div><div class='col-sm-6' id='add_icon'></div></div>");
+                $("#business_datatable_length").appendTo($("#search_field"));
+                $("#business_datatable_filter").appendTo($("#add_icon"));
+                $('#add_icon').after('<div class="addp"><a title="Add" href="/admin/businesses/business"><i class="">+</i></a></div>');
+            }
+        }else{
+            $("#business_datatable").before("<div class='row'><div class='col-sm-5' id='search_field'></div><div class='col-sm-6' id='add_icon'></div></div>");
+            $("#business_datatable_length").appendTo($("#search_field"));
+            $("#business_datatable_filter").appendTo($("#add_icon"));
+            $('#add_icon').after('<div class="addp"><a title="Add" href="/admin/businesses/business"><i class="">+</i></a></div>');
+        }
+        
+    </script>

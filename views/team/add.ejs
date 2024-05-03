@@ -1,0 +1,374 @@
+<%-include('../partials/header')%>
+
+<div class="page-container">
+
+    <div class="page-content">
+
+        <%-include('../partials/sidebar')%>
+
+    <div class="content-wrapper">
+
+                            <!-- Page header -->
+                            <div class="page-header page-header-default">
+                                <div class="page-header-content">
+                                    <div class="page-title">
+                                        <h4>
+                                            <a href="javascript:history.go(-1);"><i
+                                                    class="icon-arrow-left52 position-left"></i></a><span
+                                                class="text-semibold">Home</span> - Business</h4>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <!-- /page header -->
+
+                            <!-- Content area -->
+                            <div class="content">
+
+
+
+
+
+                                <div class="panel panel-flat">
+                                    <!-- <div class="panel-heading">
+
+
+                                <h1 class="panel-title">Form</h1>
+
+
+                            </div> -->
+
+
+                                    <div class="panel-body">
+
+
+    <form id="categoryvalidation" class="form-horizontal" action="/createbusiness"
+                                            enctype="multipart/form-data" method="post">
+                                            <fieldset class="content-group">
+                                                <legend class="text-bold">Add Business</legend>
+
+
+                                                
+
+
+
+                                                <div class="form-group">
+                                                    
+
+                                                    <label class="control-label col-lg-2" for="pro ">Choose Professionals :</label>
+                                                    <div class="col-lg-10">
+        
+                                                        <select class="form-control " data-placeholder="Choose professionals..."  name="pro_id">
+                                                                    <option disabled="disabled" selected="selected">Select</option>
+                                                            <% users.forEach((value)=>{%>
+                                                                <option class="dropdown-item" value="<%= value.id%>">
+                                                                    <%=value.full_name%>
+                                                                </option>
+        
+                                                                <%})%>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                 <label class="control-label col-lg-2">Business Name<span
+                                                            class="text-danger">*</span></label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" name="name" id="name" class="form-control"
+                                                            placeholder="Enter business name" required>
+                                                    </div> 
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2">Location<span
+                                                            class="text-danger">*</span></label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" name="location" id="location" class="form-control"
+                                                            placeholder="Enter location" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2">Offer Terms<span
+                                                            class="text-danger">*</span></label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" name="offer_terms" id="location" class="form-control"
+                                                            placeholder="Enter offer terms" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2">Description<span
+                                                            class="text-danger">*</span></label>
+                                                    <div class="col-lg-10">
+                                                        <!-- <input type="text" name="description" id="description" class="form-control"
+                                                            placeholder="Enter description" required> -->
+
+                                                            <textarea class="form-control" name="description" cols="80"label="description" rows="5" wrap="virtual"></textarea>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    
+
+                                                    <label class="control-label col-lg-2" for="pro ">Choose Category :</label>
+                                                    <div class="col-lg-10">
+        
+                                                        <select class="form-control " data-placeholder="Choose professionals..."  name="category_id">
+                                                                
+                                                            <option disabled="disabled" selected="selected">Select</option>
+                                                            <% categories.forEach((value)=>{%>
+                                                                <option class="dropdown-item" value="<%= value.id%>">
+                                                                    <%=value.name%>
+                                                                </option>
+        
+                                                                <%})%>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2">Open Time<span
+                                                            class="text-danger">*</span></label>
+                                                    <div class="col-lg-10">
+                                                        <input type="time" name="open_time" id="open_time" class="form-control"
+                                                            placeholder="Enter open time" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2">Close Time<span
+                                                            class="text-danger">*</span></label>
+                                                    <div class="col-lg-10">
+                                                        <input type="time" name="close_time" id="close_time" class="form-control"
+                                                            placeholder="Enter close time" required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2">Select Off Day<span
+                                                            class="text-danger">*</span></label>
+                                                    
+                                                            <div class="col-lg-10">
+                                                        <select class="form-control " name="off_day" id="off_day">
+                                                          <option class="dropdown-item" disabled="disabled" selected="selected"> Select </option>
+                                                          <option class="dropdown-item" value="Sunday">Sunday</option>
+                                                          <option class="dropdown-item" value="Monday">Monday</option>
+                                                          <option class="dropdown-item" value="Tuesday">Tuesday</option>
+                                                          <option class="dropdown-item" value="Wednesday">Wednesday</option>
+                                                          <option class="dropdown-item" value="Thursday">Thursday</option>
+                                                          <option class="dropdown-item" value="Friday">Friday</option>
+                                                          <option class="dropdown-item" value="Saturday">Saturday</option>
+                                                        </select>
+                                                    </div>
+                                                    <!-- <label class="control-label col-lg-2">Off Day<span
+                                                            class="text-danger">*</span></label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" name="off_day" id="off_day" class="form-control"
+                                                            placeholder="Enter off day" required>
+                                                    </div> -->
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2">Social Media Link<span
+                                                            class="text-danger">*</span></label>
+                                                    <div class="col-lg-10">
+                                                        <input type="url" name="social_media_link" id="Social_media_link" class="form-control"
+                                                            placeholder="Enter social media link" required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2">Image<span
+                                                        class="text-danger">*</span></label>
+
+                                                        <img id="blah" src="/dummy/dummy.jpeg" alt="your image"
+                                                        width="100" height="100" />
+                                                    <div class="col-lg-10">
+                                                        <% for(var i=0; i<images; i++) {%>
+                                                        <li><%= supplies[i] %></li>
+                                                        <% } %>
+                                                        <input type="file" class="control-label col-lg-3" name="images"
+                                                            accept="image/*"  id="imgInp" multiple>
+                                                    </div>
+
+
+                                                </div>
+                                              
+                                             
+                                                <div class="form-group">
+                                                <div class="mt-1 text-center">
+                                                <div class="images-preview-div"> </div>
+                                                </div>  
+                                                </div>
+
+
+
+                                                <div class="text-right">
+
+                                                    <button type="submit" class="btn btn-primary">Add<i
+                                                            class="icon-arrow-right14 position-right"></i></button>
+                                                </div>
+                                            </fieldset>
+                                        </form>
+
+<%-include('../partials/footer')%>
+
+                            </div>
+                            <!-- /content area -->
+
+                        </div>
+                        <!-- /main content -->
+
+                </div>
+                <!-- /page content -->
+
+            </div>
+            <!-- /page container -->
+
+            </body>
+
+            </html>
+
+             <script>
+    $(document).ready(function(){
+         
+      jQuery.validator.addMethod("noSpace", function(value, element) {
+        return value == '' || value.trim().length != 0;
+      }, "Space shouldn't be allowed");
+
+
+      $("#categoryvalidation").validate({
+
+        ignore: [],
+        // Specify validation rules
+        rules: {
+            
+          // name: "required",
+          // minlength: 3,
+          // noSpace : true
+
+            pro_id: {
+            required: true,
+            noSpace : true
+         },
+         category_id: {
+            required: true,
+            noSpace : true
+         },
+         name: {
+            required: true,
+            minlength: 3,
+            noSpace : true
+         },
+         location: {
+            required: true,
+            // minlength: 10,
+            noSpace : true
+         },
+         description: {
+            required: true,
+            // minlength: 10,
+            noSpace : true
+         },
+         open_time: {
+            required: true,
+            // minlength: 3,
+            noSpace : true
+         },
+         close_time: {
+            required: true,
+            // minlength: 3,
+            noSpace : true
+         },
+         off_day: {
+            required: true,
+            // minlength: 3,
+            noSpace : true
+         },
+         social_media_link: {
+            required: true,
+            // minlength: 3,
+            noSpace : true
+         },
+         images: {
+            required: true,
+            // minlength: 3,
+            // noSpace : true
+         },
+         
+         
+              
+        },
+        messages: {
+         //  name: {
+         //  required: "Please enter business name",
+         // },      
+            
+         category_id: {
+            required: " Please select category",
+            accept: "Please select a vaild category "
+         },
+         pro_id: {
+            required: " Please select professional",
+            accept: "Please select a vaild professional "
+         },
+         name: {
+            required: " Please enter business name",
+            accept: "Please enter a vaild name "
+         },
+         
+         location: {
+            required: " Please enter location",
+            accept: "Please enter a vaild location "
+         },
+         description: {
+            required: " Please enter description",
+            accept: "Please enter a vaild description "
+         },
+         open_time: {
+            required: " Please enter open time",
+            accept: "Please enter a vaild open time "
+         },
+         close_time: {
+            required: " Please enter close time",
+            accept: "Please enter a vaild close time "
+         },
+         off_day: {
+            required: " Please enter off day",
+            accept: "Please enter a vaild off day "
+         },
+         social_media_link: {
+            required: " Please enter social media link",
+            accept: "Please enter a vaild social media link "
+         },
+         images: {
+            required: " Please select image",
+            // accept: "Please enter a vaild social media link "
+         },
+         
+          
+
+        },
+      
+      });
+    });
+    </script> 
+
+           <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script >
+$(function() {
+// Multiple images preview with JavaScript
+var previewImages = function(input, imgPreviewPlaceholder) {
+if (input.files) {
+var filesAmount = input.files.length;
+for (i = 0; i < filesAmount; i++) {
+var reader = new FileReader();
+reader.onload = function(event) {
+$($.parseHTML('<img>')).attr('src', event.target.result).appendTo(imgPreviewPlaceholder);
+}
+reader.readAsDataURL(input.files[i]);
+}
+}
+};
+$('#imgInp').on('change', function() {
+previewImages(this, 'div.images-preview-div');
+});
+});
+</script>

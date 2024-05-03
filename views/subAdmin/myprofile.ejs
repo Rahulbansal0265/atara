@@ -1,0 +1,126 @@
+<%-include(". /partials/header")%>
+
+
+	<!-- /main navbar -->
+
+
+	<!-- Page container -->
+	<div class="page-container">
+
+		<!-- Page content -->
+		<div class="page-content">
+
+			<!-- Main sidebar -->
+			<%-include(". /partials/sidebar")%>
+				<!-- /main sidebar -->
+
+
+				<!-- Main content -->
+				<div class="content-wrapper">
+
+					<!-- Page header -->
+					<div class="page-header page-header-default">
+						<div class="page-header-content">
+							<div class="page-title">
+								<h4><a href="javascript:history.go(-1);"><i
+											class="icon-arrow-left52 position-left"></i></a> <span
+										class="text-semibold">Home</span> - Dashboard</h4>
+							</div>
+						</div>
+					</div>
+					<!-- /page header -->
+
+
+					<!-- Content area -->
+					<div class="content">
+						<div class="panel panel-flat">
+							<div class="panel-heading">
+								<h3 class="panel-title">My profile<a class="heading-elements-toggle"><i
+											class="icon-more"></i></a></h3>
+
+							</div>
+
+
+
+							<div class="panel-body">
+
+								<form class="form-horizontal " action="/updateprofilesubadmin" method="post"
+									enctype="multipart/form-data">
+									<fieldset class="content-group">
+										<div class="form-group">
+											<label class="control-label col-lg-3">Profile picture</label>
+											<div class="col-lg-9">
+												<img id="blah" src="/images/users/<%-session.image%>" height="150px"
+													width="150px" style="
+									 border-radius: 100px;">
+											</div>
+
+											<div class="output"></div>
+										</div>
+
+
+										<div class="form-group">
+											<label class="control-label col-lg-3">Update Image</label>
+											<!-- <img id="output" width="200" height="100" /> -->
+											<div class="col-lg-9">
+
+												<input id="imgInp" type="file" accept="image/*"
+													class="control-label col-lg-3" name="image"
+													value="ace656a2-a7be-4f17-8315-e4d000565873.png">
+											</div>
+
+
+										</div>
+
+
+
+										<div class="form-group">
+											<label class="control-label col-lg-3">Your Name</label>
+											<div class="col-lg-9">
+												<input type="text" name="name" class="form-control"
+													value="<%-session.full_name%>" required="required"
+													placeholder="Enter your name" aria-required="true">
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="control-label col-lg-3">Email </label>
+											<div class="col-lg-9">
+
+												<input type="text" name="email" class="form-control"
+													value="<%-session.email%>" required="required"
+													placeholder="Enter your email" aria-required="true"
+													disabled="disabled">
+											</div>
+										</div>
+
+										<div class="text-right">
+
+											<button type="submit" class="btn btn-primary">Update<i
+													class="icon-arrow-right14 position-right"></i></button>
+										</div>
+								</form>
+							</div>
+						</div>
+
+
+
+						<!-- Footer -->
+						<%-include(". /partials/footer")%>
+							<!-- /footer -->
+
+					</div>
+					<!-- /content area -->
+
+				</div>
+				<!-- /main content -->
+
+		</div>
+		<!-- /page content -->
+
+	</div>
+	<!-- /page container -->
+
+	</body>
+
+	</html>

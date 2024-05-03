@@ -1,0 +1,256 @@
+<%- include ("../partials/header") %>
+    <!-- Page container -->
+    <div class="page-container">
+
+        <!-- Page content -->
+        <div class="page-content">
+            <%- include ("../partials/sidebar") %>
+                <!-- Main content -->
+                <div class="content-wrapper">
+
+                    <!-- Page header -->
+                    <div class="page-header page-header-default">
+                        <div class="page-header-content">
+                            <div class="page-title">
+                                <h4>
+                                    <a href="javascript:history.go(-1);">
+                                        <i class="icon-arrow-left52 position-left"></i>
+                                    </a>
+                                    <span class="text-semibold">Sub Admins</span>
+                                </h4>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- /page header -->
+
+                    <!-- Content area -->
+                    <div class="content">
+                        <div class="panel panel-flat">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Listing</h3>
+
+                            </div>
+
+
+
+                            <table id="sub_admin_datatable" class="table datatable-selection-single">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Sr. No.</th>
+                                        <th class="text-center">Sub Admin Name</th>
+                                        <th class="text-center">Email</th>
+                                        <th class="text-center">Phone</th>
+                                        <th class="text-center">Status</th>
+                                        <th class="text-center" data-orderable="false">Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <% 
+                                        var j=0
+                                        subadminlisting.forEach((users,i)=>{%>
+                                        <tr>
+                                            <td class="text-center">
+                                                <%= j+=1 %>
+                                            </td>
+                                            <td class="text-center">
+                                                <%=users.full_name%>
+                                            </td>
+
+                                            <td class="text-center">
+                                                <%=users.email%>
+                                            </td>
+
+                                            <td class="text-center">
+                                                <%=users.phone%>
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="form-group">
+                                                    <div class="control-label"></div>
+                                                    <label class="custom-switch mt-2">
+                                                        <input onclick="changeStatus('<%=users.id %>',this)" type="checkbox" name="custom-switch-checkbox"
+                                                            class="custom-switch-input" <%=users.status==1?"checked":"" %>>
+                                                        <span class="custom-switch-indicator"></span>
+                                                    </label>
+                                                </div>
+                                            
+                                            </td>
+                                            <td class="text-center">
+                                                <a title="Edit" href="/admin/sub_admins/sub_Admin/<%=users.id%>"
+                                                    class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                                                <!-- <a title="View" href="/admin/groups/view/<%= users.id %>"
+                                                    class="btn btn-primary"><i class="fas fa-eye"></i></a> -->
+                                                <a title="Permission" href="/admin/sub_admins/permission/<%=users.id%>" class="btn btn-success"><i class="fas fa-lock"></i></a>
+                                                <a title="Delete" onclick="deleteSubAdmin('<%=users.id%>')"
+                                                    class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                        <%})%>
+                                </tbody>
+                            </table>
+                        </div>
+                        <%- include ("../partials/footer") %>
+                    </div>
+                    <!-- /content area -->
+                </div>
+                <!-- /main content -->
+        </div>
+        <!-- /page content -->
+
+    </div>
+    <!-- /page container -->
+
+
+    <script>
+    function deleteSubAdmin(id) {
+        bootbox.confirm("Do you really want to delete sub admin?", function (result) {
+            if (result) {
+                $.post("/admin/sub_admins/delete", { id: id }, function (data, status) {
+                    if (data) {
+                        // $(".table").load(location.href + " .table");
+                        // iziToast.success({
+                        //     // title: "Success",
+                        //     message: "Sub admin deleted successfully",
+                        //     position: "topRight",
+                        // });
+                        location.reload()
+                    }
+                });
+            }
+        });
+    }
+
+
+        // function confirmDelete(id) {
+        //     console.log("------------------------------result------", id);
+
+
+        //     const swalWithBootstrapButtons = Swal.mixin({
+        //         customClass: {
+        //             confirmButton: 'btn btn-danger',
+        //             cancelButton: 'btn btn-success'
+        //         },
+        //         buttonsStyling: false
+        //     })
+        //     console.log("------------------------------result------", id);
+
+        //     swalWithBootstrapButtons.fire({
+        //         title: 'Are you sure?',
+        //         text: "You won't be able to revert this!",
+        //         icon: 'warning',
+        //         showCancelButton: true,
+        //         confirmButtonText: 'Yes, delete it!',
+        //         cancelButtonText: 'No, cancel!',
+        //         reverseButtons: true
+        //     }).then((isConfirm) => {
+        //         // console.log(isConfirm)
+        //         // return
+        //         if (isConfirm.isConfirmed) {
+        //             // alert('asd')
+        //             $.ajax({
+        //                 url: "/admin/sub_admins/delete",
+        //                 method: 'post',
+        //                 data: { id: id },
+        //                 success: function (result) {
+
+        //                 }
+
+
+        //             });
+
+
+        //             swalWithBootstrapButtons.fire(
+        //                 'Deleted!',
+        //                 'Your data has been deleted.',
+        //                 'success'
+        //             ).then(() => {
+        //                 location.reload();
+        //             })
+        //         } else {
+        //             swalWithBootstrapButtons.fire(
+        //                 'Cancelled',
+        //                 'Your imaginary data is safe :)',
+        //                 'error'
+        //             )
+        //         }
+        //     })
+
+        // }
+
+
+
+
+
+        function changeStatus(id, elem) {
+                var status = 0;
+                if (elem.checked) {
+                    status = 1
+                }
+
+                $.ajax({
+                    type: "post",
+                    url: "/admin/sub_admins/changeStatus",
+                    data: {
+                        id: id,
+                        status: status
+                    },
+                    beforeSend: function () {
+                        blockUI("#myTable");
+                    },
+                    success: function (data) {
+                        if (data) {
+                            unblockUI("#myTable");
+                            $(".table").load(location.href + " .table");
+                            iziToast.success({
+                                title: "Success",
+                                message: "Status updated successfully",
+                                position: "topRight",
+                            });
+                        } else {
+                            iziToast.success({
+                                title: "Danger",
+                                message: "Status did not updated",
+                                position: "topRight",
+                            });
+                        }
+                    }
+                });
+            }
+
+
+
+
+    var table = $("#sub_admin_datatable").DataTable()
+    $("#sub_admin_datatable").before("<div class='row'><div class='col-sm-5' id='search_field'></div><div class='col-sm-6' id='add_icon'></div></div>");
+    $("#sub_admin_datatable_length").appendTo($("#search_field"));
+    $("#sub_admin_datatable_filter").appendTo($("#add_icon"));
+    $('#add_icon').after('<div class="addp"><a title="Add" href="/admin/sub_admins/sub_Admin"><i class="">+</i></a></div>');
+
+
+
+
+        // function deleteSubAdmin(id) {
+        //     bootbox.confirm("Do you really want to delete sub admin?", function (result) {
+        //         if (result) {
+        //             $.post("/admin/sub_admins/delete", { id: id }, function (data, status) {
+        //                 if (data) {
+        //                     $(".table").load(location.href + " .table");
+        //                     var message = "Sub admin deleted successfully";
+        //                     iziToast.success({
+        //                         title: "Success",
+        //                         message: message,
+        //                         position: "topRight",
+        //                     });
+        //                 }
+        //             });
+        //         }
+        //     });
+        // }
+
+    </script>
+
+    </body>
+
+    </html>

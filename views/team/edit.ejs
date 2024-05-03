@@ -1,0 +1,330 @@
+
+
+
+   <%- include('../partials/header') %>
+            <!-- /main navbar -->
+
+            <!-- Page container -->
+            <div class="page-container">
+
+                <!-- Page content -->
+                <div class="page-content">
+
+                    <!-- Main sidebar -->
+                    <%- include('../partials/sidebar') %>
+                        <!-- /main sidebar -->
+
+                        <!-- Main content -->
+                        <div class="content-wrapper">
+
+                            <!-- Page header -->
+                            <div class="page-header page-header-default">
+                                <div class="page-header-content">
+                                    <div class="page-title">
+                                        <h4>
+                                            <a href="javascript:history.go(-1);"><i
+                                                    class="icon-arrow-left52 position-left"></i></a><span
+                                                class="text-semibold">Home</span> - Business</h4>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <!-- /page header -->
+
+                            <!-- Content area -->
+                            <div class="content">
+
+                                <div class="panel panel-flat">
+                                  
+                                    <div class="panel-body">
+
+                                        <form id="categoryvalidation" class="form-horizontal" action="/editbusinesspost/<%-editstistics.id%>"
+                                            enctype="multipart/form-data" method="post">
+                                            <fieldset class="content-group">
+                                                <legend class="text-bold">Edit Business</legend>
+                                                
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2" for="category ">Choose Pro :</label>
+                                                    <div class="col-lg-10">
+        
+                                                        <select class="form-control " data-placeholder="Choose professional..."  name="pro_id">
+        
+                                                            <% for(let i in users) { %>
+                        
+                                                                <option  value="<%=users[i].id%>" <%= (users[i].id == editstistics.pro_id)?'selected':'' %>><%=users[i].full_name%></option>
+                                                                    <% } %>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2" for="category ">Choose Category :</label>
+                                                    <div class="col-lg-10">
+        
+                                                        <select class="form-control " data-placeholder="Choose professional..."  name="category_id">
+        
+                                                            <% for(let i in categories) { %>
+                        
+                                                                <option  value="<%=categories[i].id%>" <%= (categories[i].id == editstistics.category_id)?'selected':'' %>><%=categories[i].name%></option>
+                                                                    <% } %>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2">Business Name<span
+                                                            class="text-danger">*</span></label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" name="name" id="name" class="form-control"
+                                                           value="<%-editstistics.name%>">
+                                                    </div>
+                                                </div>
+                                                 <div class="form-group">
+                                                    <label class="control-label col-lg-2">Offer terms<span
+                                                            class="text-danger">*</span></label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" name="offer_terms" id="name" class="form-control"
+                                                           value="<%-editstistics.offer_terms%>">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2">Location<span
+                                                            class="text-danger">*</span></label>
+                                                    <div class="col-lg-10">
+                                                        <input type="text" name="location" id="location" class="form-control"
+                                                           value="<%-editstistics.location%>">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2">Open Time<span
+                                                            class="text-danger">*</span></label>
+                                                    <div class="col-lg-10">
+                                                        <input type="time" name="open_time" id="open_time" class="form-control"
+                                                           value="<%-editstistics.open_time%>">
+                                                    </div>
+                                                </div>
+                                               
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2">Close Time<span
+                                                            class="text-danger">*</span></label>
+                                                    <div class="col-lg-10">
+                                                        <input type="time" name="close_time" id="close_time" class="form-control"
+                                                           value="<%-editstistics.close_time%>">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2">Social Media Link<span
+                                                            class="text-danger">*</span></label>
+                                                    <div class="col-lg-10">
+                                                        <input type="url" name="social_media_link" id="social_media_link" class="form-control"
+                                                           value="<%-editstistics.social_media_link%>">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2">Day Off<span
+                                                            class="text-danger">*</span></label>
+                                                    <div class="col-lg-10">
+                                                        <select class="form-control " name="off_day">
+                                                         <%
+                                                            var options = ["Sunday", "Monday", "Tuesday", "Wednesday","Thursday","Friday","Saturday" ];
+                                                            for ( var i = 0; i < options.length; i++ )
+                                                            {
+                                                             var isSelected = ( editstistics.off_day == options[i] ) ? "selected" : "";
+                                                            %>  
+                                                                <option value="<%=options[i]%>" <%=isSelected %>>
+                                                            <%= options[i] %>
+                                                                </option>
+                                                            <%
+                                                            }
+                                                            %>
+                                                        </select>
+                                                        <!-- <select class="form-control " name="off_day" id="off_day" value="<%= editstistics.off_day %>">
+                                                          <option class="dropdown-item" disabled="disabled"> --Choose one-- </option>
+                                                          <option class="dropdown-item" value="Sunday" >Sunday</option>
+                                                          <option class="dropdown-item" value="Monday" >Monday</option>
+                                                          <option class="dropdown-item" value="Tuesday" >Tuesday</option>
+                                                          <option class="dropdown-item" value="Wednesday">Wednesday</option>
+                                                          <option class="dropdown-item" value="Thursday">Thursday</option>
+                                                          <option class="dropdown-item" value="Friday">Friday</option>
+                                                          <option class="dropdown-item" value="Saturday">Saturday</option>
+                                                        </select> -->
+                                                        <!-- <input type="text" name="off_day" id="off_day" class="form-control"
+                                                           value="<%-editstistics.off_day%>"> -->
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2">Description<span
+                                                            class="text-danger">*</span></label>
+                                                    <div class="col-lg-10">
+                                                        <!-- <input type="text" name="description" id="description" class="form-control"
+                                                           value="<%-editstistics.description%>"> -->
+
+                                                           <!-- <textarea id="description" name="description"  class="form-control" style="white-space: normal">
+                                                              <%-editstistics.description%>  </textarea> -->
+
+
+                                                              <textarea class="form-control" name="description" cols="80"label="description" rows="4" wrap="virtual"><%-editstistics.description%></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2">Image</label>
+                                                   
+                                                    <div class="col-lg-10">
+                                                         <% for(let i in businessimage) { %>
+                                                        <img src="/images/<%=businessimage[i].image%>" id="blah" width="100" height="100" />
+                                                         <!-- <img src="/images/<%-editstistics.image%>" id="blah" width="100" height="100" /> -->
+                                                    <% } %>
+
+                                                        
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <input id ="imgInp"type="file" class="control-label col-lg-3" name="images"
+                                                            value="" accept="image/png, image/jpeg" multiple>
+                                                    </div>
+
+
+                                                </div>
+
+                                                <div class="text-right">
+
+                                                    <button type="submit" class="btn btn-primary">Update<i
+                                                            class="icon-arrow-right14 position-right"></i></button>
+                                                </div>
+                                            </fieldset>
+                                        </form>
+                                    </div>
+                                </div>
+
+
+
+                                <!-- Footer -->
+                                <%- include('../partials/footer') %>
+                                    <!-- /footer -->
+
+                            </div>
+                            <!-- /content area -->
+
+                        </div>
+                        <!-- /main content -->
+
+                </div>
+                <!-- /page content -->
+
+            </div>
+            <!-- /page container -->
+
+            </body>
+
+            </html>
+
+ <script>
+    $(document).ready(function(){
+         
+      jQuery.validator.addMethod("noSpace", function(value, element) {
+        return value == '' || value.trim().length != 0;
+      }, "Space shouldn't be allowed");
+
+
+      $("#categoryvalidation").validate({
+
+        ignore: [],
+        // Specify validation rules
+        rules: {
+            
+          // name: "required",
+          // minlength: 3,
+          // noSpace : true
+
+            name: {
+            required: true,
+            minlength: 3,
+            noSpace : true
+         },
+         location: {
+            required: true,
+            // minlength: 10,
+            noSpace : true
+         },
+         description: {
+            required: true,
+            // minlength: 10,
+            noSpace : true
+         },
+         open_time: {
+            required: true,
+            // minlength: 3,
+            noSpace : true
+         },
+         close_time: {
+            required: true,
+            // minlength: 3,
+            noSpace : true
+         },
+         off_day: {
+            required: true,
+            // minlength: 3,
+            noSpace : true
+         },
+         social_media_link: {
+            required: true,
+            // minlength: 3,
+            noSpace : true
+         },
+         // image: {
+         //    required: true,
+         //    // minlength: 3,
+         //    // noSpace : true
+         // },
+         
+         
+              
+        },
+        messages: {
+         //  name: {
+         //  required: "Please enter name",
+         // },      
+            
+         name: {
+            required: " Please enter business name",
+            accept: "Please enter a vaild name "
+         },
+         
+         location: {
+            required: " Please enter location",
+            accept: "Please enter a vaild location "
+         },
+         description: {
+            required: " Please enter description",
+            accept: "Please enter a vaild description "
+         },
+         open_time: {
+            required: " Please enter open time",
+            accept: "Please enter a vaild open time "
+         },
+         close_time: {
+            required: " Please enter close time",
+            accept: "Please enter a vaild close time "
+         },
+         off_day: {
+            required: " Please enter off day",
+            accept: "Please enter a vaild off day "
+         },
+         social_media_link: {
+            required: " Please enter social media link",
+            accept: "Please enter a vaild social media link "
+         },
+         // image: {
+         //    required: " Please select image",
+         //    // accept: "Please enter a vaild social media link "
+         // },
+         
+          
+
+        },
+      
+      });
+    });
+    </script> 

@@ -1,0 +1,184 @@
+<%- include('../partials/header') %>
+
+
+    <!-- /main navbar -->
+
+    <!-- Page container -->
+    <div class="page-container">
+
+        <!-- Page content -->
+        <div class="page-content">
+            <%- include ("../partials/sidebar") %>
+
+                <style>
+                    .top_off:after {
+                        position: absolute;
+                        content: "";
+                        height: 24px;
+                        width: 56px;
+                        background: transparent;
+                        left: 50%;
+                        transform: translate(-50%, 0px);
+                    }
+
+                    .top_off {
+                        position: relative;
+                    }
+                </style>
+
+                <!-- Main sidebar -->
+                <%- include('../partials/sidebar') %>
+                    <!-- /main sidebar -->
+
+                    <!-- Main content -->
+                    <div class="content-wrapper">
+
+                        <!-- Page header -->
+                        <div class="page-header page-header-default">
+                            <div class="page-header-content">
+                                <div class="page-title">
+                                    <h4>
+                                        <a href="javascript:history.go(-1);"><i
+                                                class="icon-arrow-left52 position-left"></i></a><span
+                                            class="text-semibold">Home</span> - Sub Admin
+                                    </h4>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <!-- /page header -->
+
+                        <!-- Content area -->
+                        <div class="content">
+                            <div class="panel panel-flat">
+                                <div class="panel-body">
+                                    <form id="contactvalidation" class="form-horizontal"
+                                        action="/admin/sub_admins/addEditPost" enctype="multipart/form-data"
+                                        method="post">
+                                        <input type="hidden" name="id" id="id"
+                                            value="<%= Object.keys(userObj).length>0 && userObj.id?userObj.id:"" %>">
+                                        <input type="hidden" name="type" value="4">
+                                        <fieldset class="content-group">
+                                            <legend class="text-bold">Add Sub Admin</legend>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-2">Name<span
+                                                        class="text-danger">*</span></label>
+                                                <div class="col-lg-10">
+                                                    <input type="text" name="full_name" id="name" class="form-control"
+                                                        placeholder="Enter your name"
+                                                        value="<%= Object.keys(userObj).length>0 && userObj.full_name?userObj.full_name:"" %>">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-2">Email<span
+                                                        class="text-danger">*</span></label>
+                                                <div class="col-lg-10">
+                                                    <input type="text" name="email" id="email" class="form-control"
+                                                        placeholder="Enter your email"
+                                                        value="<%= Object.keys(userObj).length>0 && userObj.email?userObj.email:"" %>">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-2">Password<span
+                                                        class="text-danger">*</span></label>
+                                                <div class="col-lg-10">
+                                                    <input type="password" name="password" id="password"
+                                                        class="form-control" placeholder="Enter password here">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-2">Phone<span
+                                                        class="text-danger">*</span></label>
+                                                <div class="col-lg-10">
+                                                    <input type="number" name="phone" class="form-control"
+                                                        placeholder="Enter your phone number"
+                                                        value="<%= Object.keys(userObj).length>0 && userObj.phone?userObj.phone:"" %>">
+                                                </div>
+                                            </div>
+                                            <div class="text-right">
+                                                <button type="submit" class="btn btn-primary">
+                                                    <%= Object.keys(userObj).length>0?"Edit":"Add" %>
+                                                </button>
+                                                <a href="/admin/sub_admins" style="background-color: #8080808c; color: black;" type="submit"
+                                                    class="btn btn-secondary">
+                                                    Back
+                                                </a>
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- Footer -->
+                            <%- include('../partials/footer') %>
+                                <!-- /footer -->
+
+                        </div>
+                        <!-- /content area -->
+
+                    </div>
+                    <!-- /main content -->
+
+        </div>
+        <!-- /page content -->
+
+    </div>
+    <!-- /page container -->
+
+    </body>
+
+    </html>
+
+
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.map"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
+    <script>
+        $("#contactvalidation").validate({
+            rules: {
+                full_name: {
+                    required: true,
+                },
+                email: {
+                    required: true,
+                    remote: {
+                        url: "/admin/sub_admins/checkEmail",
+                        type: "post",
+                        data: {
+                            email: function () {
+                                return $("#email").val();
+                            },
+                            user_id: function () {
+                                return $("#id").val();
+                            },
+                        },
+                    },
+                },
+                password: {
+                    required: true
+                },
+                phone: {
+                    required: true
+                }
+            },
+            messages: {
+                full_name: {
+                    required: "Please enter full name"
+                },
+                email: {
+                    required: "Please enter email"
+                },
+                password: {
+                    required: "Please enter password"
+                },
+                phone: {
+                    required: "Please enter phone"
+                }
+            },
+            submitHandler: function (form) {
+                return true
+            }
+        })
+    </script>

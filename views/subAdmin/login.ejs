@@ -1,0 +1,224 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Atara</title>
+
+	<!-- Global stylesheets -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+	<link rel="icon" type="image/x-icon" href="/assets/images/Ataralogo (1).png">
+
+	<link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/core.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/components.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/colors.css" rel="stylesheet" type="text/css">
+	<!-- /global stylesheets -->
+
+	<!-- Core JS files -->
+	<script type="text/javascript" src="assets/js/plugins/loaders/pace.min.js"></script>
+	<script type="text/javascript" src="assets/js/core/libraries/jquery.min.js"></script>
+	<script type="text/javascript" src="assets/js/core/libraries/bootstrap.min.js"></script>
+	<script type="text/javascript" src="assets/js/plugins/loaders/blockui.min.js"></script>
+	<!-- /core JS files -->
+
+
+	<!-- Theme JS files -->
+	<script type="text/javascript" src="assets/js/core/app.js"></script>
+
+	<!-- /theme JS files -->
+
+	<style>
+		.navbar.navbar-inverse {
+    background-color: rgb(41, 36, 8 );
+
+
+
+
+	
+}
+	</style>
+
+
+<style>
+	.error{
+		color: rgb(235, 5, 5);
+		background-color: #FFF;
+	}
+	body {
+/*	    background: #af5ee0;*/
+background-image: url("/images/backgroundlogin.png");
+ background-size: cover;
+} 
+</style>
+	<% if(msg !='' ) { %>
+		<div class="alert alert-success msg"
+			style="position: absolute; z-index: 9999; color:white; background-color: #6b0202af; right: 10px; top: 10px;">
+			<span style="font-size: 16px;">
+				<%= msg %>
+			</span>
+		</div>
+		<% } %>
+	
+
+
+</head>
+
+
+
+
+<body class="login-container">
+
+	<!-- Main navbar -->
+	<!-- <div class="navbar navbar-inverse">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="#"><img src="just_ask/logo/logo.png" alt=""></a>
+			<ul class="nav navbar-nav pull-right visible-xs-block">
+				<li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+			</ul>
+		</div>
+
+		
+	</div> -->
+
+
+
+	<!-- /main navbar -->
+
+
+	<!-- Page container -->
+	<div class="page-container">
+
+		<!-- Page content -->
+		<div class="page-content">
+
+			<!-- Main content -->
+			<div class="content-wrapper " style="padding-left: 0px;">
+
+				<!-- Content area -->
+				<div class="content">
+
+					<!-- Simple login form -->
+					<form action="/subadminpost" method="post" id="loginform">
+						<div class="panel panel-body login-form">
+							<div class="text-center">
+								<div >
+
+									<!-- <strong>ATARA</strong> -->
+
+									<img src="/assets/images/Ataralogo (1).png" height="100%" width="200px" alt="">
+
+
+
+								</div>
+								<h5 class="content-group">Login to your account <small class="display-block"></small></h5>
+							</div>
+
+							<div class="form-group has-feedback has-feedback-left">
+								<input required type="email" name="email"  class="form-control" placeholder="Email">
+								<div class="form-control-feedback">
+									<i class="icon-user text-muted"></i>
+								</div>
+							</div>
+
+							<div class="form-group has-feedback has-feedback-left">
+								<input required type="password" name="password" class="form-control" placeholder="Password">
+								<div class="form-control-feedback">
+									<i class="icon-lock2 text-muted"></i>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<button type="submit" class="btn btn-primary btn-block">Sign in <i class="icon-circle-right2 position-right"></i></button>
+							</div>
+
+							<div class="text-center">
+								<!-- <a href="/recover_password">Forgot password?</a> -->
+							</div>
+
+							<div class="text-center">
+   &copy;2023 <a href="#">Atara</a> by <a href="https://www.cqlsys.com/" target="_blank">CqlSys   .</a>
+</div>
+						</div>
+					</form>
+					<!-- /simple login form -->
+
+
+					<!-- Footer -->
+				<!-- <%- include('./partials/footer')%> -->
+					<!-- /footer -->
+
+				</div>
+				<!-- /content area -->
+
+			</div>
+			<!-- /main content -->
+
+		</div>
+		<!-- /page content -->
+
+	</div>
+	<!-- /page container -->
+
+</body>
+</html>
+<script>
+    $(document).ready(function(){
+         
+      jQuery.validator.addMethod("noSpace", function(value, element) {
+        return value == '' || value.trim().length != 0;
+      }, "No space please and don't leave it empty");
+
+
+      $("#loginform").validate({
+
+        ignore: [],
+        // Specify validation rules
+        rules: {
+            
+
+            
+         email: {
+            required: true,
+            noSpace : true,
+            email: true,
+            // regex: /^\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
+            regex: /^([_\-\.0-9a-zA-Z]+)@([_\-\.0-9a-zA-Z]+)\.([a-zA-Z]){2,7}$/
+            },
+         
+            password: {
+            required: true,
+            minlength: 6,
+            // maxlength: 16,
+            noSpace : true
+            },
+        
+
+              
+        },
+        messages: {
+        
+         email: {
+            required: " Please enter email",
+            accept: "Please enter a vaild email "
+         },
+         
+         password: {
+            required: " Please enter password",
+            accept: "Please enter a vaild password "
+         },
+         
+
+        },
+      
+      });
+
+
+    
+
+
+    });
+    </script>

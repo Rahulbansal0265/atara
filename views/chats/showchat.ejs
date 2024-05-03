@@ -1,0 +1,570 @@
+
+
+    <%-include('../partials/header')%>
+
+
+<style>
+	.row {
+		margin-right: 28px;
+		margin-left: -18px;
+	}
+	.container-fluid {
+		padding-right: 42px;
+		padding-left: 51px;
+		margin-right: auto;
+		margin-left: auto;
+	}
+	.headers{
+		font-size: 20px;
+	}
+   
+   .inbox_people {
+	   background: #fff;
+	   float: left;
+	   overflow: hidden;
+	   width: 30%;
+	   border-right: 1px solid #ddd;
+   }
+   
+   .inbox_msg {
+	   border: 1px solid #ddd;
+	   clear: both;
+	   overflow: hidden;
+   }
+   
+   .top_spac {
+	   margin: 20px 0 0;
+   }
+   
+   .recent_heading {
+	   float: left;
+	   width: 40%;
+   }
+   
+   .srch_bar {
+	   display: inline-block;
+	   text-align: right;
+	   width: 60%;
+   
+   }
+   
+   .headind_srch {
+	   padding: 10px 29px 10px 20px;
+	   overflow: hidden;
+	   border-bottom: 1px solid #c4c4c4;
+   }
+   
+   .recent_heading h4 {
+	   color: #0465ac;
+	   font-size: 16px;
+	   margin: auto;
+	   line-height: 29px;
+   }
+   
+   .srch_bar input {
+	   outline: none;
+	   border: 1px solid #cdcdcd;
+	   border-width: 0 0 1px 0;
+	   width: 80%;
+	   padding: 2px 0 4px 6px;
+	   background: none;
+   }
+   
+   .srch_bar .input-group-addon button {
+	   background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+	   border: medium none;
+	   padding: 0;
+	   color: #707070;
+	   font-size: 18px;
+   }
+   
+   .srch_bar .input-group-addon {
+	   margin: 0 0 0 -27px;
+   }
+   
+   .chat_ib h5 {
+	   font-size: 15px;
+	   color: #464646;
+	   margin: 0 0 8px 0;
+   }
+   
+   .chat_ib h5 span {
+	   font-size: 13px;
+	   float: right;
+   }
+   
+   .chat_ib p {
+	   font-size: 12px;
+	   color: #989898;
+	   margin: auto;
+	   display: inline-block;
+	   white-space: nowrap;
+	   overflow: hidden;
+	   text-overflow: ellipsis;
+   }
+   
+   .chat_img {
+	   float: left;
+	   width: 11%;
+   }
+   
+   .chat_img img {
+	   width: 100%
+   }
+   
+   .chat_ib {
+	   float: left;
+	   padding: 0 0 0 15px;
+	   width: 88%;
+   }
+   
+   .chat_people {
+	   overflow: hidden;
+	   clear: both;
+   }
+   
+   .chat_list {
+	   border-bottom: 1px solid #ddd;
+	   margin: 0;
+	   padding: 18px 16px 10px;
+   }
+   
+   .inbox_chat {
+	   height: 550px;
+	   overflow-y: scroll;
+   }
+   
+   .active_chat {
+	   background: #e8f6ff;
+   }
+   
+   .incoming_msg_img {
+	   display: inline-block;
+	   width: 6%;
+   }
+   
+   .incoming_msg_img img {
+	   width: 100%;
+   }
+   
+   .received_msg {
+	   display: inline-block;
+	   padding: 0 0 0 10px;
+	   vertical-align: top;
+	   width: 92%;
+   }
+   
+   .received_withd_msg p {
+	   background: #ebebeb none repeat scroll 0 0;
+	   border-radius: 0 15px 15px 15px;
+	   color: #646464;
+	   font-size: 14px;
+	   margin: 0;
+	   padding: 5px 10px 5px 12px;
+	   width: 100%;
+   }
+   
+   .time_date {
+	   color: #747474;
+	   display: block;
+	   font-size: 12px;
+	   margin: 8px 0 0;
+   }
+   
+   .received_withd_msg {
+	   width: 57%;
+   }
+   
+   .mesgs{
+	   float: left;
+	   padding: 30px 15px 0 25px;
+	   width:100%;
+	   
+	   background: #f1f1f1;
+   }
+   
+   .sent_msg p {
+	   background:#0465ac;
+	   border-radius: 12px 15px 15px 0;
+	   font-size: 14px;
+	   margin: 0;
+	   color: #fff;
+	   padding: 5px 10px 5px 12px;
+	   width: 100%;
+   }
+   
+   .outgoing_msg {
+	   overflow: hidden;
+	   margin: 2px 0 2px;
+   }
+   
+   .sent_msg {
+	   float: right;
+	   width: 46%;
+   }
+   
+   .input_msg_write input {
+	   background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+	   border: medium none;
+	   color: #4c4c4c;
+	   font-size: 15px;
+	   min-height: 48px;
+	   width: 100%;
+	   outline:none;
+   }
+   
+   .type_msg {
+	   border-top: 1px solid #c4c4c4;
+	   position: relative;
+   }
+   
+   .msg_send_btn {
+	   background: #05728f none repeat scroll 0 0;
+	   border:none;
+	   border-radius: 50%;
+	   color: #fff;
+	   cursor: pointer;
+	   font-size: 15px;
+	   height: 33px;
+	   position: absolute;
+	   right: 0;
+	   top: 11px;
+	   width: 33px;
+   }
+   
+   .messaging {
+	   padding: 0 0 0px 0;
+   }
+   
+   .msg_history {
+	   height: 516px;
+	   overflow-y: auto;
+   }
+
+   label {
+    margin-bottom: 7px;
+    font-weight: 400;
+    margin-left: -55px;
+}
+   </style>
+
+    <!-- /main navbar -->
+
+    <!-- Page container -->
+    <div class="page-container">
+
+        <!-- Page content -->
+        <div class="page-content">
+
+            <!-- Main sidebar -->
+            <%-include('../partials/sidebar')%>
+                <!-- /main sidebar -->
+
+                <!-- Main content -->
+                <div class="content-wrapper">
+
+                    <!-- Page header -->
+                    <div class="page-header page-header-default">
+                        <div class="page-header-content">
+                            <div class="page-title">
+                                <h4> <a href="javascript:history.go(-1);"><i class="icon-arrow-left52 position-left"></i></a><span
+                                         class="text-semibold">Home</span> - Chat</h4>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+			  <section class="content">
+				<%if(msg && msg!=""){%>
+						<div data-notify="container" id="msg" class="bootstrap-notify-container alert alert-dismissible bg-green p-r-35 animated bounceInRight" role="alert" data-notify-position="top-left" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s; z-index: 1031; top: 20px; right: 20px;"><span data-notify="icon"></span> <span data-notify="title"></span> <span data-notify="message"><%=msg%></span></div>
+					<% }%>
+					   <div class="container-fluid">
+						   <div class="row clearfix">
+							  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							   <div class="card">
+								   <div class="header">
+									   <h2>Chat</h2>
+								   </div>
+								   
+											<div class="messaging">
+												<div class="inbox_msg">
+													<div class="mesgs">
+														<div class="msg_history">
+															<%if(SeconduserMsg == ""){ %>
+															<h3 class="text-center">No Chat Found</h3>
+																<% } else { %>
+																<% for(let i in SeconduserMsg) { %>  
+																	<%if(SeconduserMsg[i].userid==userid){%>
+																		<div class="incoming_msg">
+																		<% if(SeconduserMsg[0].user.image!=""){%>
+																			<div class="incoming_msg_img">
+																				<img src="/images/<%= SeconduserMsg[0].user.image %>">
+																			</div>
+																			<%}else{%>
+																				<div class="incoming_msg_img">
+																				<img src="https://cdn.pixabay.com/photo/2015/03/04/22/35/head-659652_960_720.png">
+																			</div>
+																			<%}%>
+																			<div class="received_msg">
+																				<div class="received_withd_msg">
+
+																					<%if(SeconduserMsg[i].msgType == 0){%>
+																						<p><%=SeconduserMsg[i].message%></p>
+
+																					<% }else { %>
+																						<p><a href="/images/<%=SeconduserMsg[i].message%>" target="_blank">
+																							<img style="width:100px; height:100px;" src="/images/<%=SeconduserMsg[i].message%>" srcset=""></a></p>
+																					<% } %>
+																				<span class="time_date"><%=moment.unix(SeconduserMsg[i].createdAt).format("HH:mm:s")%></span>
+																			</div> 
+																				
+																			</div>
+																			</div>
+																<% } %>
+																<%if(SeconduserMsg[i].userid==user2Id){%>
+																	
+																	<div class="outgoing_msg">
+																	<div class="sent_msg">
+
+																		<%if(SeconduserMsg[i].msgType == 0){%>
+																			<p><%=SeconduserMsg[i].message%></p>
+
+																		<% }else { %>
+																			<p><a href="/images/<%=SeconduserMsg[i].message%>" target="_blank">
+																				<img style="width:100px; height:100px;" src="/images/<%=SeconduserMsg[i].message%>" srcset=""></a></p>
+																		<% } %>
+
+																	<span class="time_date"><%=moment.unix(SeconduserMsg[i].createdAt).format("HH:mm:s")%></span> </div> 
+																</div>
+																	<% } %>
+																
+																<% } %>
+													</div> 
+													<% } %>
+													</div> 
+											</div>
+										</div>
+									</form>
+			                        <input type="hidden" id="msgType" name="msgType" value="0">
+			                        <input type="hidden" id="extension" name="extension" value="">
+									
+									<div class="card" style="padding: 16px; margin-left: 49px; margin-right: 82px;">
+											<div id ="image" class="row clearfix">
+												<div class="col-sm-12">
+													<div class="form-group">
+														<label class="lb">Send Message </label>
+														<div>
+														<!-- <div class="form-line"> -->
+
+
+															<input type="text" id="val-message" name="message" class="form-control" placeholder="Type Message....." style="float: left; width: 89%;    margin-left: -57px;">
+
+															<div id="SendButtonDiv" style="display:none;">
+																<button id ="SendButton" type="button" class="btn bg-green btn-circle-lg waves-effect waves-circle waves-float updatebtn" style="float: left;margin-left: 612px; margin-top:-36px">Send</button>
+														    </div>
+
+															<div id="inpfile">
+																<input type="file" name="file"  class="btn bg-light-green btn-circle-lg waves-effect waves-circle waves-float" id="attachment" style="margin-left:583px; margin-top:-71px; position: fixed;" onchange="fileSelected(this)"/>
+																<i name="file" id="btnAttachment"  onclick="openAttachment()" style="margin-left:6px;" class="btn bg-green btn-circle-lg waves-effect waves-circle waves-float">upload</i>
+														</div>
+														
+													</div>
+												</div>
+											</div>
+									
+									</section>
+
+									
+                        <!-- Footer -->
+                        <%-include('../partials/footer')%>
+                            <!-- /footer -->
+
+                    </div>
+                    <!-- /content area -->
+
+                </div>
+                <!-- /main content -->
+
+        </div>
+        <!-- /page content -->
+
+    </div>
+    <!-- /page container -->
+
+    </body>
+
+    </html>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.4.0/socket.io.js"></script> -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+                 
+<script>
+
+$(window).on("load", function () {
+//    alert('123');
+   	let data = {
+		userid: '<%=user2Id%>'
+	};
+
+	socket.emit('connect_user', data);
+
+	let d = $(".msg_history");
+	d.scrollTop(d.prop("scrollHeight"));
+});
+
+ var socket = io.connect('http://localhost:8048/'); 
+//var socket = io.connect('http://202.164.42.227:4047/');
+// console.log(socket,"===socket===="); 
+
+	$(".updatebtn").on("click", function() {
+        //  alert()
+         let msg = $("#val-message").val();
+		 //alert(msg)
+         if (msg.trim() == '') {
+            Swal.fire(
+            	'Warning',
+            	'Please enter a message to send',
+            	'warning'
+            );
+         } else {
+
+			let getMsgType = document.getElementById('msgType').value;
+			let extension = document.getElementById('extension').value;
+            let data = {
+			   userid: "<%=user2Id%>",
+               user2Id: "<%=userid%>",
+               message: msg,
+               messageType: getMsgType,
+			   extension:extension,
+            };
+
+            //	console.log(data,"dataaaaaaaaaaaaaaaaaaa");
+			document.getElementById('val-message').value = '';	
+			document.getElementById('SendButtonDiv').style.display = 'none';
+			document.getElementById('inpfile').style.display = 'block';
+			document.getElementById('val-message').disabled = false;
+            socket.emit('send_message', data);
+
+         }
+      });
+
+	  socket.on('body', data => {
+			console.log(data,'------------------------append message');
+
+			let unix_timestamp = data.createdAt;
+			var date = new Date(unix_timestamp * 1000);
+			var hours = date.getHours();
+			var minutes = "0" + date.getMinutes();
+			var seconds = "0" + date.getSeconds();
+			var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+			// console.log(formattedTime);
+			var html = '';
+
+
+			var loginUserId = '<%=loginUserId%>'
+
+			if(data.SenderID == loginUserId){
+
+					html += '<div class="outgoing_msg">';
+					html += '<div class="sent_msg">';
+						if(data.msgType == 0){
+
+							html +=	 '<p>'+ data.message+'</p>';
+						}else{
+							html +=	`<p><a href="/images/${data.message}" target='_blank'>
+								<img style='width:100px; height:100px;' src="/images/${data.message}" srcset=''></a></p>`;
+						}
+
+					html +=	'<span class="time_date">'+ formattedTime+'</span></div>'; 
+				html += '</div>';
+			}else{
+				html += '<div class="incoming_msg">';
+					html +='<div class="incoming_msg_img">';
+						
+						html +='<img src="https://cdn.pixabay.com/photo/2015/03/04/22/35/head-659652_960_720.png">'; 
+						html +='</div>';
+						html +='<div class="received_msg">';
+							html +='<div class="received_withd_msg">';
+
+								if(data.msgType == 0){
+									html +=	 '<p>'+ data.message+'</p>';
+								}else{
+									html +=	`<p><a href="/images/${data.message}" target='_blank'>
+										<img style='width:100px; height:100px;' src="/images/${data.message}" srcset=''></a></p>`;
+								}
+
+
+								html +='<span class="time_date">'+formattedTime+'</span>';
+						html +='</div>';
+					html +='</div>';
+				html +='</div>';
+			}
+
+			$(".msg_history").append(html);
+			let d = $(".msg_history");
+			d.scrollTop(d.prop("scrollHeight"));
+
+		});
+
+//   });
+</script>
+
+
+
+<script>
+
+
+		$(function() {
+			$('#val-message').on('keyup', function(e) {
+		        console.log(e);
+				if ($("#val-message").val().length !==0) {
+					// alert('123');
+					document.getElementById('msgType').value = 0;
+					document.getElementById('SendButtonDiv').style.display = 'block';
+					document.getElementById('inpfile').style.display = 'none';
+				} else {
+					document.getElementById('SendButtonDiv').style.display = 'none';
+					document.getElementById('inpfile').style.display = 'block';
+				}
+			});
+		});
+
+
+
+    function openAttachment() {
+      document.getElementById('attachment').click();
+    }
+    
+    function fileSelected(input){
+
+		var file = input.files[0];
+		var reader = new FileReader();
+		reader.onloadend = function() {
+			// console.log('RESULT', reader.result)
+
+			let getExt = reader.result.split(",")[0].split("/")[1].split(";")[0];
+			console.log(getExt,"==========");
+			document.getElementById('val-message').value = reader.result;
+			document.getElementById('extension').value = getExt;
+
+		}
+		reader.readAsDataURL(file);
+
+      document.getElementById('msgType').value = 1;
+      document.getElementById('val-message').disabled = true;
+	  document.getElementById('SendButtonDiv').style.display = 'block';
+
+    }
+
+</script>
+
+
+
+
+	

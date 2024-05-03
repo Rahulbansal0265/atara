@@ -1,0 +1,191 @@
+<% if(session.type==1){ %>
+        <%-include('../partials/header')%>
+    <%}else{%>
+        <%- include ("../subAdmin/partials/header") %>
+    <%}%>
+
+    <!-- /main navbar -->
+
+    <!-- Page container -->
+    <div class="page-container">
+
+        <!-- Page content -->
+        <div class="page-content">
+
+            <!-- Main sidebar -->
+            <% if(session.type==1){ %>
+                <%-include('../partials/sidebar')%>
+            <%}else{%>
+                <%- include ("../subAdmin/partials/sidebar") %>
+            <%}%>
+                <!-- /main sidebar -->
+
+                <!-- Main content -->
+                <div class="content-wrapper">
+
+                    <!-- Page header -->
+                    <div class="page-header page-header-default">
+                        <div class="page-header-content">
+                            <div class="page-title">
+                                <h4> <a href="javascript:history.go(-1);"><i class="icon-arrow-left52 position-left"></i></a><span
+                                         class="text-semibold">Home</span> - Statistics</h4>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- /page header -->
+
+                    <!-- Content area -->
+                    <div class="content">
+
+                        <div class="panel panel-flat">
+                            
+
+                            <div class="panel-body">
+
+                                
+                                <form class="form-horizontal" id="basic-form" action="#" enctype="multipart/form-data"
+                                    method="post">
+                                    <fieldset class="content-group">
+                                        <legend class="text-bold">
+
+                                            View Statistics
+                                            
+                                          </legend>
+                                          
+                                         
+                                        
+                                        <!-- <div class="form-group">
+                                            <div class="col-lg-2">Titles</div>
+                                 
+                                            <div class="col-lg-10">
+                                                <% statmultidata.forEach((risk,i)=>{%>
+                                                <%=risk.title %>
+                                                
+                                                <%})%>
+                                            </div>
+                                        </div> -->
+                                        <!-- <div class="form-group">
+                                            <div class="col-lg-2">No of Guest</div>
+                                 
+                                            <div class="col-lg-10">
+                                                <% statmultidata.forEach((risk,i)=>{%>
+                                                <%=risk.no_guest %>
+                                                
+                                                <%})%>
+                                            </div>
+
+                                            
+                                        </div> -->
+                                        <div class="form-group">
+                                            <div class="col-lg-2">Pro Name</div>
+                                 
+                                            <div class="col-lg-10">
+                                                <%=statisticss.user.full_name %> <%=statisticss.user.lastname %>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-lg-2">Business Name</div>
+                                        
+                                            <div class="col-lg-10">
+                                                <%=statisticss.business.name %>
+                                            </div>
+                                        </div>
+                                         <div class="form-group">
+                                            <div class="col-lg-2">No. of Influencers Received</div>
+                                 
+                                            <div class="col-lg-10">
+                                                <%=statisticss.influencer %>
+                                            </div>
+                                         </div>
+                                         <div class="form-group">
+                                            <div class="col-lg-2">No. of Partnerships Done</div>
+                                 
+                                            <div class="col-lg-10">
+                                                <%=statisticss.partnership %>
+                                            </div>
+                                         </div>
+                                         <div class="form-group">
+                                                <div class="col-lg-2">Content Created</div>
+                                     
+                                                <div class="col-lg-10">
+                                                    <%=statisticss.no_stories %>
+                                                </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-lg-2">No. Of view</div>
+                                 
+                                            <div class="col-lg-10">
+                                                <%=statisticss.no_views %>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-lg-2">Money Saved From a Traditional Add Campaign</div>
+                                 
+                                            <div class="col-lg-10">
+                                                <%=statisticss.money %>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-lg-2">Statistic of the Month</div>
+                                 
+                                            <div class="col-lg-10">
+                                                <%=statisticss.statistics_of_the_month %>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-lg-2">Campaign performed : Number of Influencer come within 1 month</div>
+                                 
+                                            <div class="col-lg-10">
+                                                <%=statisticss.campaign_performed %>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-lg-2">Number of interactions</div>
+                                 
+                                            <div class="col-lg-10">
+                                                <%=statisticss.number_of_interactions %>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-lg-2">Best Influencer</div>
+                                 
+                                            <div class="col-lg-10">
+                                                <%=statisticss.best_influencer %>
+                                            </div>
+                                        </div>
+
+                                       
+
+
+                                     
+                                 <div class="text-right">
+
+                                            <a href="javascript:history.go(-1);" class="m-5 btn btn-primary">Back</a>
+                                        </div>
+                                </form>
+                            </div>
+                        </div>
+
+
+
+                        <!-- Footer -->
+                        <%-include('../partials/footer')%>
+                            <!-- /footer -->
+
+                    </div>
+                    <!-- /content area -->
+
+                </div>
+                <!-- /main content -->
+
+        </div>
+        <!-- /page content -->
+
+    </div>
+    <!-- /page container -->
+
+    </body>
+
+    </html>

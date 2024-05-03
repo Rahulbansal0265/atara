@@ -1,0 +1,205 @@
+<div class="sidebar sidebar-main">
+    <div class="sidebar-content">
+        <div class="sidebar-user">
+            <div class="category-content">
+                <div class="media">
+                    <div class="media-right media-middle">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-category sidebar-category-visible">
+            <div class="category-content no-padding">
+                <ul class="navigation navigation-main navigation-accordion">
+                    <li class="<%=(title == 'dashboard' )? 'active' : '' %>">
+                        <a href="/admin/dashboard"><i class="icon-home4"></i> <span>Dashboard</span></a>
+                    </li>
+                    <% if(global.type==4){ %>
+                        <% if(global.permission!='' && global.permission.module.includes('user')){ %>
+                            <li
+                                class="<%=(title == 'influencers' || title=='influencer_statistics') || title=='professionals' || title=='sub_admins'? 'active' : '' %>">
+                                <a href="#"><i class="fas fa-users" style="font-size: 15px;"></i>
+                                    <span>Users</span></a>
+                                <ul>
+                                    <% if(global.permission.sub_module.includes('influencer')){ %>
+                                        <li><a class="<%= title=='influencers'?" active":"" %>"
+                                                href="/userslisting">Influencers</a>
+                                        </li>
+                                        <% } %>
+                                            <% if(global.permission.sub_module.includes('influencer_statistics')){ %>
+                                                <li><a class="<%= title=='influencer_statistics'? 'active':'' %>"
+                                                        href="/admin/influencer/statistics">Influencer
+                                                        Statistics</a></li>
+                                                <% } %>
+                                                    <% if(global.permission.sub_module.includes('professional')){ %>
+                                                        <li><a class="<%= title=='professionals'? 'active':'' %>"
+                                                                href="/admin/professionals">Professsionals</a></li>
+                                                        <% } %>
+
+                                                            <% if(global.permission.sub_module.includes('sub_admin')){
+                                                                %>
+
+                                                                <li><a class="<%= title=='sub_admins'? 'active':'' %>"
+                                                                        href="/admin/sub_admins">Sub
+                                                                        Admins</a></li>
+                                                                <% } %>
+
+                                </ul>
+                            </li>
+                            <% } %>
+
+
+                                <% if(global.permission!='' && global.permission.module.includes('business')){ %>
+                                    <li class="<%=(title == 'businesses') ? 'active' : '' %>">
+                                        <a class="<%= title=='businesses'?'active':'' %>" href="/admin/businesses"><i
+                                                class="fas fa-briefcase" style="font-size: 15px;"></i>
+                                            <span>Businesses</span></a>
+                                    </li>
+                                    <% } %>
+
+                                        <% if(global.permission!='' && global.permission.module.includes('offer')){ %>
+                                            <li class="<%=(title == 'offers') ? 'active' : '' %>">
+                                                <a class="<%= title=='offers'?'active':'' %>" href="/admin/offers"><i
+                                                        class="fas fa-gift" style="font-size: 15px;"></i>
+                                                    <span>Offers</span></a>
+                                            </li>
+                                            <% } %>
+
+
+                                                <% if(global.permission!='' && global.permission.module.includes('category')){ %>
+                                                    <li class="<%=(title == 'categories') ? 'active' : '' %>">
+                                                        <a class="<%= title=='categories'?'active':'' %>"
+                                                            href="/admin/categories"><i
+                                                                class="glyphicon glyphicon-th"></i>
+                                                            <span>Categories</span></a>
+                                                    </li>
+                                                    <% } %>
+
+                                                        <% if(global.permission!='' && global.permission.module.includes('statistic')){ %>
+                                                            <li class="<%=(title == 'statistics') ? 'active' : '' %>">
+                                                                <a class="<%= title=='statistics'?'active':'' %>"
+                                                                    href="/admin/statistics"><i class="fas fa-chart-bar"
+                                                                        style="font-size: 15px;"></i>
+                                                                    <span>Statistics</span></a>
+                                                            </li>
+                                                            <% } %>
+                                                                <% if(global.permission!='' && global.permission.module.includes('booking')){ %>
+                                                                    <li
+                                                                        class="<%=(title == 'bookings') ? 'active' : '' %>">
+                                                                        <a class="<%= title=='bookings'?'active':'' %>"
+                                                                            href="/admin/bookings"><i
+                                                                                class="fas fa-calendar"
+                                                                                style="font-size: 15px;"></i>
+                                                                            <span>Bookings</span></a>
+                                                                    </li>
+                                                                    <% } %>
+
+                                                                        <% }else { %>
+                                                                            <li
+                                                                                class="<%=(title == 'influencers' || title=='influencer_statistics') || title=='professionals' || title=='sub_admins'? 'active' : '' %>">
+                                                                                <a href="#"><i class="fas fa-users" style="font-size: 15px;"></i>
+                                                                                    <span>Users</span></a>
+                                                                                <ul>
+                                                                                    <li><a class="<%= title=='influencers'?" active":"" %>"
+                                                                                            href="/userslisting">Influencers</a>
+                                                                                    </li>
+                                                                                    <li><a class="<%= title=='influencer_statistics'? 'active':'' %>" href="/admin/influencer/statistics">Influencer
+                                                                                            Statistics</a></li>
+                                                                            
+                                                                                    <li><a class="<%= title=='professionals'? 'active':'' %>" href="/admin/professionals">Professsionals</a></li>
+                                                                            
+                                                                                    <%if(session.type==1) { %>
+                                                                            
+                                                                                        <li><a class="<%= title=='sub_admins'? 'active':'' %>" href="/admin/sub_admins">Sub
+                                                                                                Admins</a></li>
+                                                                                        <% } %>
+                                                                            
+                                                                                </ul>
+                                                                            </li>
+                                                                            
+                                                                            
+                                                                            
+                                                                            <li class="<%=(title == 'businesses') ? 'active' : '' %>">
+                                                                                <a class="<%= title=='businesses'?'active':'' %>" href="/admin/businesses"><i class="fas fa-briefcase"
+                                                                                        style="font-size: 15px;"></i>
+                                                                                    <span>Businesses</span></a>
+                                                                            </li>
+                                                                            
+                                                                            <li class="<%=(title == 'offers') ? 'active' : '' %>">
+                                                                                <a class="<%= title=='offers'?'active':'' %>" href="/admin/offers"><i class="fas fa-gift"
+                                                                                        style="font-size: 15px;"></i>
+                                                                                    <span>Offers</span></a>
+                                                                            </li>
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+                                                                            <li class="<%=(title == 'categories') ? 'active' : '' %>">
+                                                                                <a class="<%= title=='categories'?'active':'' %>" href="/admin/categories"><i class="glyphicon glyphicon-th"></i>
+                                                                                    <span>Categories</span></a>
+                                                                            </li>
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+                                                                            <li class="<%=(title == 'statistics') ? 'active' : '' %>">
+                                                                                <a class="<%= title=='statistics'?'active':'' %>" href="/admin/statistics"><i class="fas fa-chart-bar"
+                                                                                        style="font-size: 15px;"></i>
+                                                                                    <span>Statistics</span></a>
+                                                                            </li>
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+                                                                            <li class="<%=(title == 'bookings') ? 'active' : '' %>">
+                                                                                <a class="<%= title=='bookings'?'active':'' %>" href="/admin/bookings"><i class="fas fa-calendar"
+                                                                                        style="font-size: 15px;"></i>
+                                                                                    <span>Bookings</span></a>
+                                                                            </li>
+                                                                            <li class="<%=(title == 'our_selection_week') ? 'active' : '' %>">
+                                                                                <a class="<%= title=='our_selection_week'?'active':'' %>" href="/admin/our_selection_week"><i class="fas fa-comment"
+                                                                                        style="font-size: 15px;"></i>
+                                                                                    <span>Our selection of the week</span></a>
+                                                                            </li>
+
+                                                                            <li class="<%=(title == 'request_an_access') ? 'active' : '' %>">
+                                                                                <a class="<%= title=='request_an_access'?'active':'' %>" href="/admin/request_an_access"><i class="fas fa-bullhorn"
+                                                                                        style="font-size: 15px;"></i>
+                                                                                    <span>Request an Access</span></a>
+                                                                            </li>
+                                                                            
+                                                                            
+                                                                            
+                                                                                <%if(session.type==1) { %>
+                                                                                    <li class="<%=(title == 'teams')? 'active' : '' %>">
+                                                                                        <a href="/admin/teams"><i class="fas fa-user-friends" style="font-size: 15px;"></i>
+                                                                                            <span>Teams</span></a>
+                                                                            
+                                                                                    </li>
+                                                                                    <% } %>
+                                                                                        <li class="<%=(title == 'termconditions' || title=='privacy' || title=='aboutus' )? 'active' : '' %>">
+                                                                                            <a href="/termconditions"><i class=" icon-stumbleupon"></i>
+                                                                                                <span>CMS</span></a>
+                                                                                            <ul>
+                                                                                                <li><a href="/termconditions">Terms
+                                                                                                        and Conditions</a>
+                                                                                                </li>
+                                                                                                <li><a href="/privacy">Privacy
+                                                                                                        Policy</a></li>
+                                                                                                <li><a href="/aboutus">About
+                                                                                                        Us</a></li>
+                                                                                            </ul>
+                                                                                        </li>
+                                                                            <% } %>
+
+                                                                        
+
+                                                                           
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

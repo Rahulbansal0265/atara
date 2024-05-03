@@ -1,0 +1,362 @@
+<%- include ("../partials/header") %>
+    <style>
+        .custom-switch-input:checked~.custom-switch-indicator {
+            background: #6777ef;
+        }
+
+        .custom-switch-input:checked~.custom-switch-indicator:before {
+            left: calc(1rem + 1px);
+        }
+
+        .custom-switch-input {
+            position: absolute;
+            z-index: -1;
+            opacity: 0;
+        }
+
+        .custom-switch-indicator:before {
+            content: '';
+            position: absolute;
+            height: calc(1.25rem - 4px);
+            width: calc(1.25rem - 4px);
+            top: 1px;
+            left: 1px;
+            background: #fff;
+            border-radius: 50%;
+            transition: .3s left;
+        }
+
+        .custom-switch-indicator {
+            display: inline-block;
+            height: 1.25rem;
+            width: 2.25rem;
+            background: #e9ecef;
+            border-radius: 50px;
+            position: relative;
+            vertical-align: bottom;
+            border: 1px solid rgba(0, 40, 100, 0.12);
+            transition: .3s border-color, .3s background-color;
+        }
+    </style>
+
+    <!-- Page container -->
+    <div class="page-container">
+
+        <!-- Page content -->
+        <div class="page-content">
+
+            <%- include ("../partials/sidebar") %>
+
+
+                <!-- Main content -->
+                <div class="content-wrapper">
+
+                    <!-- Page header -->
+                    <div class="page-header page-header-default">
+                        <div class="page-header-content">
+                            <div class="page-title">
+                                <h4>
+                                    <a href="JavaScript:void(0)">
+                                        <i class="icon-arrow-left52 position-left"></i>
+                                    </a>
+                                    <span class="text-semibold">Influencers</span>
+                                </h4>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- /page header -->
+
+                    <!-- Content area -->
+                    <div class="content">
+                        <div class="panel panel-flat">
+                            <div class="panel-heading d-flex justify-content-center align-items-center">
+                                <h3 class="panel-title">Listing</h3>
+                            </div>
+
+
+
+                            <table id="myTable" class="table datatable-selection-single">
+                                <thead>
+                                    <tr>
+                                        <th>Sr. No.</th>
+                                        <th>Full Name</th>
+                                        <th data-orderable="false">Profile picture</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>DOB</th>
+                                        <th>Gender</th>
+                                        <th>Status</th>
+                                        <th>Accept/Reject</th>
+
+                                        <th class="text-center" data-orderable="false">
+                                            Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% 
+                                        var j=0
+                                        for(let i in usersArr){ %>
+                                        <tr>
+                                            <td>
+                                                <%= j+=1 %>
+                                            </td>
+                                            <td>
+                                                <%=usersArr[i].full_name%>
+                                                    <%=usersArr[i].lastname%>
+                                            </td>
+                                            <td>
+                                                <% if(usersArr[i].image){ %>
+                                                    <a href="/images/<%= usersArr[i].image %>" target="_blank"> <img
+                                                            style="width:100px; height:100px;"
+                                                            src="/images/users/<%= usersArr[i].image %>"
+                                                            alt="<%= usersArr[i].image %>" srcset=""></a>
+                                                    <%}else{%>
+                                                        <a href="/assets/images/download.jpg" target="_blank"><img
+                                                                style="width:100px; height:100px;"
+                                                                src="/assets/images/download.jpg"
+                                                                alt="<%= usersArr[i].image %>" srcset=""></a>
+                                                        <%}%>
+                                            </td>
+
+                                            <td>
+                                                <%=usersArr[i].email%>
+                                            </td>
+
+                                            <td>
+                                                <%=usersArr[i].phone%>
+                                            </td>
+                                            <td>
+                                                <%=usersArr[i].birthdate%>
+                                            </td>
+                                            <td>
+                                                <% if(usersArr[i].gender==1) { %>
+                                                    Male
+                                                    <% } else { %>
+
+                                                        Female
+
+                                                        <% } %>
+
+
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="form-group">
+                                                    <div class="control-label"></div>
+                                                    <label class="custom-switch">
+                                                        <input onclick="changeStatus('<%=usersArr[i].id%>',this)"
+                                                            type="checkbox" name="custom-switch-checkbox"
+                                                            class="custom-switch-input"
+                                                            <%=usersArr[i].status==1?"checked":"" %>>
+                                                        <span class="custom-switch-indicator"></span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <div class="control-label"></div>
+                                                    <label class="custom-switch mt-2">
+                                                        <input onclick="approval('<%=usersArr[i].id %>',this)"
+                                                            type="checkbox" name="custom-switch-checkbox"
+                                                            class="custom-switch-input"
+                                                            <%=usersArr[i].is_approved==1?"checked":"" %>>
+                                                        <span class="custom-switch-indicator"></span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td style="text-align:center;">
+                                                
+                                                <% 
+                                                    if(global.type==4){
+                                                    if(global.permission!='' && "influencer" in global.permission.child && global.permission.child.influencer.includes('view')){ %>
+                                                <a title="View" href="/viewuser/<%=usersArr[i].id%>"
+                                                    class="btn btn-info"><i class="icon-eye"></i></a>
+                                                    <% } %>
+
+
+                                                    <% if(global.permission!='' && "influencer" in global.permission.child &&
+                                                        global.permission.child.influencer.includes('delete')){ %>
+                                                <a title="Delete" onclick="deleteInfluencer('<%=usersArr[i].id%>')"
+                                                    class="btn btn-danger 
+                                        deletdat>"><i class="icon-trash Delete"></i></a>
+                                        <% } }else{ %>
+                                            <a title="View" href="/viewuser/<%=usersArr[i].id%>" class="btn btn-info"><i class="icon-eye"></i></a>
+                                            <a title="Delete" onclick="deleteInfluencer('<%=usersArr[i].id%>')" class="btn btn-danger 
+                                                                                    deletdat>"><i class="icon-trash Delete"></i></a>
+                                            <% } %>
+                                            </td>
+                                        </tr>
+                                        <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                        <%- include ("../partials/footer") %>
+                    </div>
+                </div>
+        </div>
+    </div>
+    </div>
+
+
+    <script>
+        function changeStatus(id, elem) {
+            var status = 0;
+            if (elem.checked) {
+                status = 1
+            }
+
+            $.ajax({
+                type: "post",
+                url: "/statusupdate",
+                data: {
+                    id: id,
+                    status: status
+                },
+                beforeSend: function () {
+                    blockUI("#myTable");
+                },
+                success: function (data) {
+                    if (data) {
+                        unblockUI("#myTable");
+                        $(".table").load(location.href + " .table");
+                        iziToast.success({
+                            title: "Success",
+                            message: "Status updated successfully",
+                            position: "topRight",
+                        });
+                    } else {
+                        iziToast.success({
+                            title: "Danger",
+                            message: "Status did not updated",
+                            position: "topRight",
+                        });
+                    }
+                }
+            });
+        }
+
+
+
+
+
+        function deleteInfluencer(id) {
+            bootbox.confirm("Do you really want to delete influencer?", function (result) {
+                if (result) {
+                    $.post("/deleteuser", { id: id }, function (data, status) {
+                        if (data) {
+                            // $(".table").load(location.href + " .table");
+                            // iziToast.success({
+                            //     // title: "Success",
+                            //     message: "Influencer deleted successfully",
+                            //     position: "topRight",
+                            // });
+                            location.reload()
+                        }
+                    });
+                }
+            });
+        }
+
+        // function confirmDelete(id) {
+        //     const swalWithBootstrapButtons = Swal.mixin({
+        //         customClass: {
+        //             confirmButton: 'btn btn-danger',
+        //             cancelButton: 'btn btn-success'
+        //         },
+        //         buttonsStyling: false
+        //     })
+        //     swalWithBootstrapButtons.fire({
+        //         title: 'Are you sure?',
+        //         text: "You won't be able to revert this!",
+        //         icon: 'warning',
+        //         showCancelButton: true,
+        //         confirmButtonText: 'Yes, delete it!',
+        //         cancelButtonText: 'No, cancel!',
+        //         reverseButtons: true
+        //     }).then((isConfirm) => {
+        //         if (isConfirm.isConfirmed) {
+        //             $.ajax({
+        //                 url: "/deleteuser",
+        //                 method: 'delete',
+        //                 data: { id: id },
+        //                 success: function (result) {
+        //                 }
+        //             });
+        //             swalWithBootstrapButtons.fire(
+        //                 'Deleted!',
+        //                 'Your data has been deleted.',
+        //                 'success'
+        //             ).then((result) => {
+        //                 if (result) {
+        //                     $(".table").load(location.href + " .table");
+        //                     iziToast.success({
+        //                         title: "Success",
+        //                         message: "Influencer deleted successfully",
+        //                         position: "topRight",
+        //                     });
+        //                 } else {
+        //                     iziToast.success({
+        //                         title: "Danger",
+        //                         message: "Influencer did not deleted",
+        //                         position: "topRight",
+        //                     });
+        //                 }
+        //             })
+        //         } else {
+        //             swalWithBootstrapButtons.fire(
+        //                 'Cancelled',
+        //                 'Your imaginary data is safe :)',
+        //                 'error'
+        //             )
+        //         }
+        //     })
+
+        // }
+
+
+
+        function approval(id, elem) {
+            var status = 0;
+            if (elem.checked) {
+                status = 1
+            }
+
+            $.ajax({
+                type: "post",
+                url: "/userapproval",
+                data: {
+                    id: id,
+                    status: status
+                },
+                beforeSend: function () {
+                    blockUI("#myTable");
+                },
+                success: function (data) {
+
+                    if (data) {
+                        unblockUI("#myTable");
+                        $(".table").load(location.href + " .table");
+                        iziToast.success({
+                            title: "Success",
+                            message: "Status updated successfully",
+                            position: "topRight",
+                        });
+                    } else {
+                        iziToast.success({
+                            title: "Danger",
+                            message: "Status did not updated",
+                            position: "topRight",
+                        });
+                    }
+                }
+            });
+        }
+
+
+
+    </script>
+
+    </body>
+
+    </html>

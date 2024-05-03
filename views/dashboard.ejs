@@ -1,0 +1,387 @@
+<!-- header -->
+
+
+<!-- /main navbar -->
+<%- include ("./partials/header") %>
+
+	<style>
+	.bg-teal-400 {
+	background-color: #ffe400;
+	border: #ffe400;
+	color: #000;
+	width: 100%;
+	height: 125px;
+}
+
+	</style>
+
+
+
+	<!-- Page container -->
+
+	<!-- /header -->
+	<div class="page-container">
+
+		<!-- Page content -->
+		<div class="page-content">
+
+			<!-- Main sidebar -->
+			<%-include ("./partials/sidebar") %>
+				<!-- /main sidebar -->
+
+
+				<!-- Main content -->
+				<div class="content-wrapper">
+
+					<!-- Page header -->
+					<div class="page-header page-header-default">
+						<div class="page-header-content">
+							<div class="page-title">
+                                <h4><a href="JavaScript:void(0)"><i class="icon-arrow-left52 position-left"></i>
+                                    </a><span class="text-semibold">Dashboard</span></h4>
+							</div>
+
+						</div>
+
+
+					</div>
+					<!-- /page header -->
+
+
+					<!-- Content area -->
+
+
+
+                    <div class="content">
+                        <div class="panel panel-flat" style="min-height: 400px;">
+
+					<div class="row">
+
+
+                        <div class="col-md-4">
+                            <a href="/userslisting">
+                                <div class="panel bg-teal-400 col-md-4">
+    
+                                    <div class="panel-body">
+    
+    
+                                        <h3 class="no-margin">
+                                            <%-usersCount%>
+    
+                                        </h3><i class=" icon-users4"></i>
+    
+                                        <h4>Influencers</h4>
+    
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+						<div class="col-md-4">
+                            <a href="/admin/professionals">
+                                <div class="panel bg-teal-400 col-md-4">
+    
+                                    <div class="panel-body">
+    
+    
+                                        <h3 class="no-margin">
+                                            <%-proCount%>
+    
+                                        </h3><i class=" icon-users"></i>
+    
+                                        <h4>Professionals</h4>
+    
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-md-4">
+                            <a href="/admin/statistics">
+                                <div class="panel bg-teal-400 col-md-4">
+    
+                                    <div class="panel-body">
+    
+    
+                                        <h3 class="no-margin">
+                                            <%-statisticsCount%>
+    
+                                        </h3><i class=" glyphicon glyphicon-tasks"></i>
+    
+                                        <h4>Statistics</h4>
+    
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-md-4">
+                            <a href="/admin/bookings">
+                                <div class="panel bg-teal-400 col-md-4">
+    
+                                    <div class="panel-body">
+    
+    
+                                        <h3 class="no-margin">
+                                            <%-totalbookings%>
+    
+                                        </h3><i class=" glyphicon glyphicon-tasks"></i>
+    
+                                        <h4>Bookings</h4>
+    
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-md-4">
+                            <a href="/admin/categories">
+                                <div class="panel bg-teal-400 col-md-4">
+    
+                                    <div class="panel-body">
+    
+    
+                                        <h3 class="no-margin">
+                                            <%-totalcategory%>
+    
+                                        </h3><i class=" glyphicon glyphicon-tasks"></i>
+    
+                                        <h4>Categories</h4>
+    
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-md-4">
+                            <a href="/admin/our_selection_week">
+                                <div class="panel bg-teal-400 col-md-4">
+    
+                                    <div class="panel-body">
+    
+    
+                                        <h3 class="no-margin">
+                                            <%-totalweekselection%>
+    
+                                        </h3><i class=" glyphicon glyphicon-tasks"></i>
+    
+                                        <h4>Our Selection of the week</h4>
+    
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+					
+						
+						 
+					</div>
+					
+
+						
+					
+						 
+					
+					<hr>
+					</hr>
+					<!-- <section>
+						<div class="row">
+							<div class="col-lg-12 col-md-12 col-12">
+								<select class="form-control graph3" id="graph3" name="graph4">
+									<option value="1" attr="ADMIN COMMiSSION PER MONTHS (OF YEAR)" id = "yearData" > BY MONTHS (OF YEAR) </option>
+									<option value="2" attr="ADMIN COMMiSSION PER DAY"> BY DAY</option>
+									<option value="3" attr="ADMIN COMMiSSION THIS WEEK" id="third_option"> BY WEEK</option>
+									<option value="4" attr="ADMIN COMMiSSION THIS MONTH"> BY CURRENT MONTH</option>
+								
+								
+								  </select>
+								
+										 <canvas id="canvas3"></canvas>
+							</div>
+							<div class="col-md-6 col-lg-6 col-12">
+								<div id='myDiv' width="1000px" height="1000px"></div>
+							</div>
+						</div>
+					  </section> -->
+                    
+					<input type="hidden" id="todayUsers" value="<%-usersCount%>">
+					<input type="hidden" id="todayDate" value="<%-todayDate%>">
+
+
+
+
+                </div>
+
+					<!-- Footer -->
+					<%- include("./partials/footer")%>
+						<!-- /footer -->
+
+
+						<!-- /content area -->
+
+				
+            </div>
+        </div>
+				<!-- /main content -->
+
+		</div>
+		<!-- /page content -->
+
+	</div>
+	<!-- /page container -->
+
+	</body>
+
+	</html>
+	
+    <!--<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>--->
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script>
+    // alert('111111111111111')
+    // user_posts_graph();
+    $( document ).ready(function() {
+        // var moment = require('moment');
+        // alert(moment().format('DD'))
+        let todayDate = moment().format('YYYY-MM-DD')
+        let selectedType = $('#graph3').val();
+        // alert(selectedType)
+       // console.log(selectedType,'----selectedType-----');
+        firstTimeRender(selectedType)
+        // renderChart2(selectedType, label)
+        $('#graph3').change(function(){
+            selectedType = $('#graph3').val();
+            // renderChart2(selectedType, label)
+            firstTimeRender(selectedType)
+            // alert(selectedType);
+        })
+
+        
+        function firstTimeRender(selectedType){
+            let id = 1
+            // alert('in')
+            // alert(selectedType)
+            $.ajax({
+                url: '/chartData',
+                type: 'post',
+                data: {
+                    id: id,
+                    type: selectedType
+                },
+                success: function (response) {
+				
+                   // console.log(response,'--response----');
+                    // let label = [];
+                    // label = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
+                    //     'September', 'October', 'November', 'December'
+                    // ];
+                    let label = []
+                    if(selectedType == 1){
+                        label = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December',]
+                    }
+                    if(selectedType == 2){
+                        label = [todayDate]
+                    }
+                    if(selectedType == 3){
+                        label = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+                    }
+                    if(selectedType == 4){
+                        let currentYear = moment().format('YYYY')
+                        let currentMonth = moment().format('MM')
+                        var dateList = getDaysOfMonth(currentYear, currentMonth);
+                        label = dateList.reverse()
+                        console.log(dateList,'--dateList--');
+                    }
+                   //console.log(label);
+                    // renderChart2(response, label);
+                    renderChart2(selectedType, label,response);
+        
+                }
+            })
+        }
+
+        function getDaysOfMonth(year, month) {
+            var monthDate = moment(year+'-'+month, 'YYYY-MM');
+            var daysInMonth = monthDate.daysInMonth();
+            var arrDays = [];
+    
+            while(daysInMonth) { 
+                var current = moment().date(daysInMonth);
+                arrDays.push(current.format('YYYY-MM-DD'));
+                daysInMonth--;
+            }
+            return arrDays;
+        };
+        // alert(selectedType);
+        // alert("")
+        function renderChart2(selectedType, label, ChartData) {
+           // console.log(label);
+         //   console.log(ChartData,"======================================ChartData newsss pawan ")
+         /*var data = [
+                ['Title', 'Accepted Request', 'Rejected Requests']
+            ];*/
+        
+       //   console.log('============l', data);
+       var data=[];
+       if(selectedType!=4){
+           
+            for (let i in label) {
+                data.push([label[i], ChartData.userData[i], 2]);
+            }
+        }else{
+            data=label;
+        }
+            var config = {
+                type: 'bar',
+                data: {
+
+                labels: data,
+                datasets: [{
+                    label: 'Users',
+                    backgroundColor: 'green',
+                    borderColor: 'green',
+                    // data: [1,8,5,6,9],
+                    data: ChartData.userData,
+                    fill: false,
+                    }, 
+                    // {
+                    // label: 'Orders',
+                    // fill: false,
+                    // backgroundColor: 'red',
+                    // borderColor: 'red',
+                    // data: [2,5,3,6,3,9],
+                    // //data: ChartData.CityData,
+                    // } ,
+                ]
+                },
+                options: { events: [] }
+            };
+            var ctx = document.getElementById('canvas3').getContext('2d');
+          //  console.log(ctx);
+          
+            var myLineChart = new Chart(ctx, config);
+        
+          
+           // console.log(data);
+        
+          //  console.log(data, "==========data");
+
+
+            function toExcelUrl(data) {
+                var tsv = data.map(function (row) {
+                return row.join('\t');
+                }).join('\n');
+                var blob = new Blob([tsv], {
+                type: 'application/vnd.ms-excel'
+                });
+                return URL.createObjectURL(blob);
+            }
+
+            $('#some-link2').attr({
+                href: toExcelUrl(data),
+                download: 'test.xls'
+            });
+
+        }
+});
+    </script>

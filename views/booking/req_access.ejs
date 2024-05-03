@@ -1,0 +1,100 @@
+<%-include('../partials/header')%>
+    <div class="page-container">
+        <div class="page-content">
+            <%-include('../partials/sidebar')%>
+                <div class="content-wrapper">
+                    <div class="page-header page-header-default">
+                        <div class="page-header-content">
+                            <div class="page-title">
+                                <h4>
+                                    <a href="JavaScript:void(0)">
+                                        <i class="icon-arrow-left52 position-left"></i>
+                                    </a>
+                                    <span class="text-semibold">Request An Access</span>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div class="panel panel-flat">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Listing</h3>
+                            </div>
+                            <input type="hidden" id="permission" value="<%= global.permission!=''?JSON.stringify(global.permission):"" %>">
+                            <input type="hidden" id="type" value="<%= global.type %>">
+                            <table id="professional_datatable" class="table datatable-selection-single">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Sr.No.</th>
+                                        <th class="text-center">Email</th>
+                                        <th class="text-center">Phone</th>
+                                        <th class="text-center">Company Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% 
+                                        var j=0
+                                        for(let i in req_access){ %>
+                                        <tr>
+                                            <td class="text-center">
+                                                <%= j+=1 %>
+                                            </td>
+                                            <td class="text-center">
+                                                <%=req_access[i].email%>
+                                            </td>
+                                        
+                                            <td class="text-center">
+                                                <%=req_access[i].phone_number ? req_access[i].phone_number : ''%>
+                                            </td>
+
+                                            <td class="text-center">
+                                                <%=req_access[i].company_name%>
+                                            </td>
+                                            
+                                           
+                                          
+                                        </tr>
+                                        <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                        <%- include ("../partials/footer") %>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+    <script>
+
+        //    <THIS IS FOR STATUS ACTIVE INACTIVE WITH AJAX>
+
+   
+
+    var table = $("#professional_datatable").DataTable()
+            var permissionStringify=$("#permission").val()
+            var type=$("type").val()
+            console.log(permissionStringify,";;;;;;;;;;")
+            if(type ==4){
+                var permission = JSON.parse($("#permission").val())
+                
+
+                if (permission != '' && "professional" in permission.child &&
+                    permission.child.professional.includes('add')) {
+                    $("#professional_datatable").before("<div class='row'><div class='col-sm-5' id='search_field'></div><div class='col-sm-6' id='add_icon'></div></div>");
+                    $("#professional_datatable_length").appendTo($("#search_field"));
+                    $("#professional_datatable_filter").appendTo($("#add_icon"));
+                    $('#add_icon').after('<div class="addp"><a title="Add" href="/admin/professionals/addpro"><i class="">+</i></a></div>');
+                }
+            }else{
+                   $("#professional_datatable").before("<div class='row'><div class='col-sm-5' id='search_field'></div><div class='col-sm-6' id='add_icon'></div></div>");
+                $("#professional_datatable_length").appendTo($("#search_field"));
+                $("#professional_datatable_filter").appendTo($("#add_icon"));
+                $('#add_icon').after('<div class="addp"><a title="Add" href="/admin/professionals/addpro"><i class="">+</i></a></div>');
+            }
+
+    
+    </script>
+
+    </body>
+
+    </html>

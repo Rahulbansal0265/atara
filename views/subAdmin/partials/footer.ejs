@@ -1,0 +1,115 @@
+<style>
+    .footer {
+       position: fixed;
+       left: 0;
+       bottom: 0;
+       width: 100%;
+       background-color: rgb(0, 0, 0);
+       color: white;
+       text-align: right;
+    }
+    </style>
+
+
+<div class="" style="display: none;">
+   &copy;2023 <a href="#">Atara</a> by <a href="https://www.cqlsys.com/" target="_blank">CqlSys   .</a>
+</div>
+
+
+<script>
+   imgInp.onchange = evt => {
+       const [file] = imgInp.files
+       if (file)
+       {
+           blah.src = URL.createObjectURL(file)
+       }
+   }
+</script>
+
+
+
+<script>
+   setTimeout(function(){
+      $("div.msg"). fadeOut();
+   },2000);
+</script>
+<script>
+           $(document).ready( function () {
+    $('#myTable').DataTable();
+} );
+
+</script>
+<script>
+   imgInp.onchange = evt => {
+       const [file] = imgInp.files
+       if (file)
+       {
+           blah.src = URL.createObjectURL(file)
+       }
+   }
+</script>
+<script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+<script src="/firebase-messaging.js"></script>
+<script>
+    var GetSessionUserId = "{{Auth::user()->id}}";
+    var IsWebsiteLogin = '0';
+    //console.log("GetSessionUserId===",GetSessionUserId)
+
+    var config = {
+        'messagingSenderId': '',
+        'apiKey': '',
+        'projectId': '',
+        'appId': '',
+    };
+    firebase.initializeApp(config);
+    const messaging = firebase.messaging();
+    messaging.requestPermission().then(function () {
+        console.log("Notification permission granted.");
+        console.log(messaging.getToken());
+      // return messaging.getToken()
+    }).then(function(token) {
+        console.log('token',token)
+        var updateTokenUrl = "/update_web_token";
+        var data={
+            WebToken:token,
+            id: 1,
+        };
+        $.ajax({
+            method: 'POST',
+            url: updateTokenUrl,
+            data:data,
+          //  cache: false,
+          //  "_token": "{{ csrf_token() }}",
+           // headers: {
+          //      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          //  },
+        }).done(function (html) {
+            console.log("token updated successfully")       
+        });
+
+    }).catch(function (err) {
+        console.log("Unable to get permission to notify.", err);
+    });
+
+    let enableForegroundNotification = true;
+    messaging.onMessage(function(payload) {
+        const pushData = payload;
+
+        if(enableForegroundNotification) {
+            var logoIcon = "{{asset('public/assets/images/fav.png')}}";
+            console.log("logoIcon",logoIcon)
+            console.log("pushData",pushData);
+            //const title = pushData.data.title;
+             const title = "Bahama Events";
+            const options = {
+                title: "Bahama Events",
+                body: pushData.data.message,
+                icon: logoIcon,
+                tag: 'jnmnm'
+            };
+            navigator.serviceWorker.getRegistrations().then(registration => {
+                registration[0].showNotification(title, options);
+            });
+        }
+    });
+</script>

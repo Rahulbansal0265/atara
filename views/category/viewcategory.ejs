@@ -1,0 +1,113 @@
+<% if(session.type==1){ %>
+    <%-include('../partials/header')%>
+<%}else{%>
+    <%- include ("../subAdmin/partials/header") %>
+<%}%>
+    <!-- /main navbar -->
+
+    <!-- Page container -->
+    <div class="page-container">
+
+        <!-- Page content -->
+        <div class="page-content">
+
+            <!-- Main sidebar -->
+            <% if(session.type==1){ %>
+                <%-include('../partials/sidebar')%>
+            <%}else{%>
+                <%- include ("../subAdmin/partials/sidebar") %>
+            <%}%>
+                <!-- /main sidebar -->
+
+                <!-- Main content -->
+                <div class="content-wrapper">
+
+                    <!-- Page header -->
+                    <div class="page-header page-header-default">
+                        <div class="page-header-content">
+                            <div class="page-title">
+                                <h4> <a href="javascript:history.go(-1);"><i class="icon-arrow-left52 position-left"></i></a><span
+                                         class="text-semibold">Home</span> - Categories</h4>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- /page header -->
+
+                    <!-- Content area -->
+                    <div class="content">
+
+                        <div class="panel panel-flat">
+                            
+
+                            <div class="panel-body">
+
+                                
+                                <form class="form-horizontal" id="basic-form" action="#" enctype="multipart/form-data"
+                                    method="post">
+                                    <fieldset class="content-group">
+                                        <legend class="text-bold">
+
+                                            View Categories
+                                            
+                                          </legend>
+                                          
+                                          <div class="form-group">
+                                            <div class="col-lg-2">Category Name</div>
+                                         
+                                            <div class="col-lg-10">
+                                                <%=cats.name %>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-lg-2">Category Image</div>
+                                         
+                                            <div class="col-lg-10">
+                                                <img style=" width:100px; height:100px;"
+                                    src="/images/<%= cats.image %>" alt="<%= cats.image %>" srcset="">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-lg-2">Category Icon</div>
+                                         
+                                            <div class="col-lg-10">
+                                                <img style=" width:100px; height:100px;"
+                                    src="/images/<%= cats.category_icon %>" alt="<%= cats.category_icon %>" srcset="">
+                                            </div>
+                                        </div>
+                                        
+
+                                 <div class="text-right">
+
+                                            <a href="javascript:history.go(-1);" class="m-5 btn btn-primary">Back</a>
+                                        </div>
+                                </form>
+                            </div>
+                        </div>
+
+
+
+                        <!-- Footer -->
+                        <% if(session.type==1){ %>
+                            <%-include('../partials/footer')%>
+                        <%}else{%>
+                            <%- include ("../subAdmin/partials/footer") %>
+                        <%}%>
+                            <!-- /footer -->
+
+                    </div>
+                    <!-- /content area -->
+
+                </div>
+                <!-- /main content -->
+
+        </div>
+        <!-- /page content -->
+
+    </div>
+    <!-- /page container -->
+
+    </body>
+
+    </html>
